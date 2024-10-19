@@ -9,18 +9,6 @@ const AppointmentPage = () => {
     api.queries.appointmentFetching.getAllAppointments
   );
 
-  // console.log("point a");
-
-  // const [appointments, setAppointments] =
-  //   useState<typeof appointmentData>(undefined);
-  // setAppointments(appointmentData);
-
-  // console.log(appointmentData);
-
-  // console.log("point b");
-
-  // console.log(appointments?.at(0));
-
   return (
     <div>
       {appointmentData?.map((appointment, idx) => (
