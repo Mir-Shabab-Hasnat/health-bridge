@@ -4,7 +4,7 @@ import AIChatBox from '@/components/Chatbot/AIChatBox'
 import AIChatButton from '@/components/Chatbot/AIChatButton';
 import React, { useState } from 'react'
 
-const chatbot = () => {
+const Chatbot = () => {
     const [open, setOpen] = useState(false);
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
@@ -15,4 +15,4 @@ const chatbot = () => {
   )
 }
 
-export default chatbot
+export default Chatbot

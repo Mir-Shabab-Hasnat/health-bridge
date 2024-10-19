@@ -41,7 +41,7 @@ const LoginPage = () => {
             <div className="pre-form-text">
                 <p>Welcome to health-bridge</p>
                 <h1>Sign in</h1>
-                <p>Not have an account with us? Let's <a href="https://www.google.com/">Create one</a></p>
+                <p>Not have an account with us? <a href="https://www.google.com/">Create one</a></p>
             </div>
 
             <Form {...form}>
@@ -84,7 +84,7 @@ const LoginPage = () => {
             </Form>
 
 
-            <Button onClick={handleSubmit}>dashboard</Button>
+            
         </div>
     )
 }
