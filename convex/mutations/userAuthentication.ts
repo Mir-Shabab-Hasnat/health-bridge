@@ -5,6 +5,7 @@ import { ConvexError, v } from 'convex/values';
 
 import { mutation } from '../_generated/server';
 
+
 export const registerUser = mutation({
   args: {
     username: v.string(),
@@ -52,6 +53,7 @@ export const registerUser = mutation({
       username: args.username,
     });
 
-    return true;
+        // Return the userId (or token)
+        return { userId };
   },
 });
