@@ -1,9 +1,9 @@
 "use client";
 
-import FormContainer from "./FormContainer";
+import FormContainer, { FormSchema } from "./FormContainer";
 import ChatContainer from "./ChatContainer";
 import { useState } from "react";
-import { toast, useToast } from "@/hooks/use-toast";
+import {  useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 interface ApiResponse {
     issue?: string;
@@ -13,21 +13,7 @@ interface ApiResponse {
     severity: number;
 }
 
-const FormSchema = z.object({
-    name: z.string().min(1, {
-        message: "Name is required.",
-    }),
-    dateOfBirth: z.string().min(1, {
-        message: "Date of birth is required.",
-    }),
-    phoneNumber: z.string().min(1, {
-        message: "Phone number is required.",
-    }),
-    healthCardNumber: z.string().min(1, {
-        message: "Health card number is required.",
-    }),
-    
-});
+
 
 const FormAndChat = () => {
     const {toast} = useToast()
@@ -38,6 +24,10 @@ const FormAndChat = () => {
             title: `Form submitted for ${userName}`,
             
           })
+
+        if (chatResponse) {
+            console.log(chatResponse)
+        }
     }
     const [chatResponse, setChatResponse] = useState<ApiResponse | null>(null)
     
@@ -47,6 +37,8 @@ const FormAndChat = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-6xl">
                 <FormContainer onSubmit={onSubmit}/>
                 <ChatContainer setChatResponse = {setChatResponse}/>
+
+                
             </div>
             <div className="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-md">
                     

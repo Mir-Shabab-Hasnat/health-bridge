@@ -9,11 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    
+    "@ai-sdk/openai": "^0.0.68",
     "@chakra-ui/react": "^2.10.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@ai-sdk/openai": "^0.0.68",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -21,6 +20,7 @@
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
     "ai": "^3.4.16",
     "bcrypt-ts": "^5.0.2",
     "class-variance-authority": "^0.7.0",
