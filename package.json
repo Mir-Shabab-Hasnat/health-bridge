@@ -20,6 +20,7 @@
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
     "ai": "^3.4.16",
     "bcrypt-ts": "^5.0.2",
     "class-variance-authority": "^0.7.0",
