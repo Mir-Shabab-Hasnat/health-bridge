@@ -1,11 +1,11 @@
 "use server";
 
-import { genSaltSync, hashSync } from 'bcrypt-ts';
+import { compare } from 'bcrypt-ts';
 import { ConvexError, v } from 'convex/values';
 
 import { mutation } from '../_generated/server';
 
-export const registerUser = mutation({
+export const loginUser = mutation({
   args: {
     username: v.string(),
     password: v.string(),
@@ -33,25 +33,23 @@ export const registerUser = mutation({
       .filter((q) => q.eq(q.field("username"), args.username))
       .first();
 
-    if (existingUser) {
+    if (!existingUser) {
       throw new ConvexError({
-        message: "Username already in use. Please choose another one.",
+        message: "Username does not exist. Please register your account.",
         serverUsernameError: true,
         serverPasswordError: false,
       });
     }
 
-    const salt = genSaltSync(10);
-    const hash = hashSync(args.password, salt);
-
-    const userId = await ctx.db.insert("user", {
-      hash: hash,
-      isDoctor: false,
-      username: args.username,
+    compare(args.password, existingUser.hash).then((correctPassword) => {
+      if (correctPassword) {
+        return true;
+      }
     });
 
-    // TODO: stamp cookie
+    // TODO: cookie cheking
 
-    return typeof userId !== "undefined";
+    // Login did not succeed
+    return false;
   },
 });
