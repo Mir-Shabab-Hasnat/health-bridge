@@ -16,7 +16,7 @@ const AIChatButton = ({ onClick }: { onClick: () => void }) => {
 
   return (
     <>
-      <Button onClick={handleClick} className="flex flex-col items-center w-full h-auto p-2 bg-blue-500 text-white rounded-lg shadow-lg">
+      <Button onClick={handleClick} className="flex flex-col items-center w-full h-auto p-2 rounded-lg shadow-lg">
         <div className="flex items-center">
           <Bot size={20} className="mr-2" />
           <span className="whitespace-normal text-center">Tell us about your condition.</span>

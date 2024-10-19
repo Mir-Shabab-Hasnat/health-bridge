@@ -16,7 +16,7 @@ const ChatContainer = () => {
     const [open, setOpen] = useState(false);
     const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null)
     return (
-        <div className="flex flex-col items-center justify-center bg-green-500 text-white p-4 h-auto">
+        <div className="flex flex-col items-center justify-center bg-gray-500 rounded-lg p-4 h-auto">
             <div className='flex flex-col items-center justify-center w-full max-w-mdd'> {/* Add max width to center and contain the button */}
                 <AIChatButton onClick={() => setOpen(!open)} />
                 {open && (
