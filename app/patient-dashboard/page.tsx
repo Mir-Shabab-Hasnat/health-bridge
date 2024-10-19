@@ -115,7 +115,6 @@ const PatientDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                {header.column.columnDef.header()} {/* Render header here */}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -127,7 +126,6 @@ const PatientDashboard = () => {
                                         <TableRow key={row.id}>
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id}>
-                                                    {cell.getValue()}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
