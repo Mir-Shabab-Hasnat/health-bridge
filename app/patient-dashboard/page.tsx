@@ -21,6 +21,14 @@ import {
 } from "@/components/ui/table";
 import {Input} from "@/components/ui/input"
 
+// Define an interface for the appointment data
+interface Appointment {
+    id: number;
+    issue: string;
+    status: string;
+    date: string;
+}
+
 
 // Dummy appointment data
 const appointmentData = [
@@ -34,7 +42,7 @@ const appointmentData = [
 ];
 
 // Define columns for the appointment table
-const columns: ColumnDef<any>[] = [
+const columns: ColumnDef<Appointment>[] = [
     {
         accessorKey: "issue",
         header: () => <span>Issue</span>,
@@ -52,7 +60,7 @@ const columns: ColumnDef<any>[] = [
 const PatientDashboard = () => {
     const router = useRouter();
     const [isUserInfoOpen, setIsUserInfoOpen] = React.useState(false);
-    const [searchQuery, setSearchQuery] = React.useState(""); // State for the search query
+    const [searchQuery] = React.useState(""); // State for the search query
 
     // Dummy user details
     const userDetails = {
@@ -61,10 +69,6 @@ const PatientDashboard = () => {
         email: "john.doe@example.com",
     };
 
-    // Function to handle search input change
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value);
-    };
 
     // Filter appointment data based on the search query
     const filteredAppointments = appointmentData.filter((appointment) =>
@@ -111,7 +115,6 @@ const PatientDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                {header.column.columnDef.header()} {/* Render header here */}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -123,7 +126,6 @@ const PatientDashboard = () => {
                                         <TableRow key={row.id}>
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id}>
-                                                    {cell.getValue()}
                                                 </TableCell>
                                             ))}
                                         </TableRow>

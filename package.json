@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+
     "@ai-sdk/openai": "^0.0.68",
     "@chakra-ui/react": "^2.10.3",
     "@emotion/react": "^11.13.3",

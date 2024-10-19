@@ -4,11 +4,9 @@ import "../globals.css";
 import * as z from "zod";
 import {Button} from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {useRouter} from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
@@ -30,30 +28,30 @@ const LoginPage = () => {
     });
 
     const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
-  
+
     const handleSubmit = async (data : z.infer<typeof formSchema>) => {
       try {
         console.log("Form Data: ", data);
         console.log(data)
-        const result: boolean | (string | boolean)[] = await authenticate({ username: data.email, password: data.password });
+        const result: boolean | (string | boolean)[] = await authenticate({ username: data.username, password: data.password });
 
 
         if (Array.isArray(result)) {
             console.log("result", result)
           const [userId, isDoctor] = result;
-  
+
           if (typeof userId === 'string') {
             document.cookie = `userId=${userId}; path=/`;
           }
-  
+
           if (typeof isDoctor === 'boolean') {
             document.cookie = `isDoctor=${isDoctor}; path=/`;
           }
-  
+
         } else if (typeof result === 'boolean') {
           document.cookie = `loginSuccess=${result}; path=/`;
         }
-  
+
         alert('User registered successfully!');
       } catch (error) {
         console.error(error);
