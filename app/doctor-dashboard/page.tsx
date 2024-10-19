@@ -125,7 +125,7 @@ const DoctorDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                {/* {header.column.columnDef.header()} Render header here */}
+                                                 {header.column.columnDef.header()}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -142,7 +142,7 @@ const DoctorDashboard = () => {
                                                 <TableCell key={cell.id}
                                                 onClick={() => router.push(`/appointments/${row.original.id}`)} // Navigate to the new page with appointment ID
                                                 >
-                                                    {/* {cell.getValue()} */}
+                                                     {cell.getValue()}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
