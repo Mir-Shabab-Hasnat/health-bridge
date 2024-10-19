@@ -29,6 +29,7 @@ export default function SendSMS() {
         setStatus(`Error: ${result.error}`);
       }
     } catch (error) {
+      console.log(error)
       setStatus('Failed to send message');
     }
   };
