@@ -14,7 +14,7 @@ export default function ProdTest() {
     try {
       const { userId } = await register({ username, password });
       
-      document.cookie = `currentUser=${userId}; path=/;`;
+      document.cookie = `currentUser=${userId}; isDoctor=${isDoctor} path=/;`;
 
       alert('User registered successfully!');
     } catch (error) {
