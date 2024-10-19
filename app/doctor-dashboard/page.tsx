@@ -22,26 +22,42 @@ import {Input} from "@/components/ui/input"
 
 // Define an interface for the appointment data
 interface Appointment {
+    name : string;
+    severity: number;
     id: number;
     issue: string;
     status: string;
     date: string;
+    
 }
 
 
 // Dummy appointment data
 const appointmentData = [
-    { id: 1, issue: "Fever", status: "Pending", date: "2024-10-15" },
-    { id: 2, issue: "Burn", status: "Confirm", date: "2024-10-14" },
-    { id: 3, issue: "Headache", status: "Done", date: "2024-10-13" },
-    { id: 4, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
-    { id: 5, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
-    { id: 6, issue: "Fever", status: "Done", date: "2024-09-13" },
-    { id: 7, issue: "Broken Leg", status: "Confirm", date: "2024-06-25" },
+    // { id: 1, issue: "Fever", status: "Pending", date: "2024-10-15" },
+    // { id: 2, issue: "Burn", status: "Confirm", date: "2024-10-14" },
+    // { id: 3, issue: "Headache", status: "Done", date: "2024-10-13" },
+    // { id: 4, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
+    // { id: 5, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
+    // { id: 6, issue: "Fever", status: "Done", date: "2024-09-13" },
+    // { id: 7, issue: "Broken Leg", status: "Confirm", date: "2024-06-25" },
+    { id: 1, name: "John", severity: 5, issue: "Fever", status: "Pending", date: "2024-10-15" },
+    { id: 2, name: "Doe", severity: 3, issue: "Burn", status: "Confirm", date: "2024-10-14" },
+    { id: 3, name: "Jane", severity: 2, issue: "Headache", status: "Done", date: "2024-10-13" },
+    { id: 4, name: "Doe", severity: 1, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
+    { id: 5, name: "John", severity: 4, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
 ];
 
 // Define columns for the appointment table
 const columns: ColumnDef<Appointment>[] = [
+    {
+        accessorKey: "name",
+        header: () => <span>Name</span>,
+    },
+    {
+        accessorKey: "severity",
+        header: () => <span>Severity</span>,
+    },
     {
         accessorKey: "issue",
         header: () => <span>Issue</span>,
