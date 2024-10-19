@@ -172,15 +172,16 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
           </Button>
         </form>
 
-        <div>
-            {apiResponse && (
-                <div>
-                    <h3>API Response:</h3>
-                    <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
-                </div>
-            )
-        }
-        </div>
+        <div className="flex flex-col mt-3">
+        {apiResponse && (
+          <div className="bg-gray-100 p-3 rounded-md">
+            <h3 className="text-lg font-semibold mb-2">API Response:</h3>
+            <pre className="whitespace-pre-wrap break-words overflow-auto">
+              {JSON.stringify(apiResponse, null, 2)}
+            </pre>
+          </div>
+        )}
+      </div>
       </div>
       
     </div>
