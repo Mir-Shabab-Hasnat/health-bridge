@@ -16,10 +16,10 @@ interface UserInfoProps {
 
 const UserInfo: React.FC<UserInfoProps> = ({ isOpen, onClose, userDetails }) => {
     return (
-        <Drawer open={isOpen} onOpenChange={onClose}> {/* Set placement to "right" */}
+        <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
             <DrawerContent className="p-4">
                 <DrawerClose className="absolute right-2 top-2">
-                    <Button variant="ghost">X</Button>
+                    <Button variant="ghost" onClick={onClose}>X</Button>
                 </DrawerClose>
                 <div className="p-4">
                     <h2 className="text-lg font-semibold">{userDetails.username}&rsquo;s Profile</h2>
@@ -37,5 +37,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ isOpen, onClose, userDetails }) => 
         </Drawer>
     );
 };
+
 
 export default UserInfo;

@@ -33,7 +33,7 @@ export const FormSchema = z.object({
 });
 
 interface FormProps {
-    onSubmit: (data: z.infer<typeof FormSchema>) => void;
+    onSubmit: (data: z.infer<typeof FormSchema>) => void
 }
 
 const FormContainer = ({ onSubmit }: FormProps) => {

@@ -19,6 +19,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import {Input} from "@/components/ui/input"
+import Nav from "./Nav";
+
 
 // Define an interface for the appointment data
 interface Appointment {
@@ -83,11 +85,12 @@ const DoctorDashboard = () => {
     });
 
     const handleSubmit = () => {
-        router.push("/form");
+        router.push("/doctor-form");
     };
 
     return (
         <div className="page-container">
+            <Nav />
             <div className="dashboard">
                 <h2>Recent Appointments</h2>
                 <div>
