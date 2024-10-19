@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @layer utilities {
@@ -76,3 +79,95 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.left-screen {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+
+  background-image: url('/Artboard.png');
+  background-repeat: no-repeat;  /* Prevents duplication */
+  background-size: cover;        /* Adjusts image to cover the entire area */
+  background-position: center;   /* Centers the background image */
+}
+
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;  /* Stack items vertically */
+  flex-wrap: wrap;  /* Allow wrapping if needed */
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  font-size: 89px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.welcome-text h1 {
+  margin-bottom: 20px; /* Adds space between the header and description */
+}
+
+
+.description {
+  color: rgba(255, 255, 255, 0.8);  /* Slightly lighter color */
+  margin: 10px 10px;
+}
+
+
+
+.authentication-box {
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 40px 0px,
+  rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+
+
+
+
+/*-------LOGIN--------*/
+.form-auth {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.form-auth .pre-form-text {
+  padding-bottom: 3rem;
+}
+
+.form-auth .pre-form-text h1 {
+  font-size: 33px;
+  font-weight: 700;
+  padding: 2px 0;
+}
+
+.form-auth .pre-form-text p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.secondary-btn {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 20px 0;
+}
+
+.secondary-btn:hover {
+  background: rgb(48, 48, 48);
+  border: solid 2px rgb(48, 48, 48);
+}
+
+
