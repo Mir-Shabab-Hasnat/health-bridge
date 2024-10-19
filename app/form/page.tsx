@@ -8,7 +8,6 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/hooks/use-toast";
 
-
 import ChatContainer from "./ChatContainer";
 import FormContainer, { FormSchema } from "./FormContainer";
 
@@ -34,7 +33,11 @@ const FormAndChat = () => {
     api.mutations.appointment.createAppointment
   );
 
-  const [userId, setUserId] = useState<string | null>(null)
+  const createPatientData = useMutation(
+    api.mutations.patientData.createPatientData
+  );
+
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchUserId() {
@@ -56,8 +59,7 @@ const FormAndChat = () => {
 
     console.log("hi");
 
-    
-    console.log(userId)
+    console.log(userId);
     // If the API from ChatGPT has a response AND the userId is in the
     // cookies, pass it to Convex
     if (chatResponse && userId) {
@@ -67,6 +69,15 @@ const FormAndChat = () => {
         others: "",
         severity: chatResponse.severity,
         symptoms: "",
+        userId: userId as Id<"user">,
+      });
+    }
+    if (data && userId) {
+      createPatientData({
+        dob: data.dateOfBirth,
+        healthcard: parseInt(data.healthCardNumber),
+        name: data.name,
+        phone: parseInt(data.phoneNumber),
         userId: userId as Id<"user">,
       });
     }

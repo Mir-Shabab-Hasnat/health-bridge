@@ -20,6 +20,7 @@ import type * as mutations_patientData from "../mutations/patientData.js";
 import type * as mutations_userAuthentication from "../mutations/userAuthentication.js";
 import type * as queries_appointment from "../queries/appointment.js";
 import type * as queries_patientData from "../queries/patientData.js";
+import type * as queries_shabob from "../queries/shabob.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -35,6 +36,7 @@ declare const fullApi: ApiFromModules<{
   "mutations/userAuthentication": typeof mutations_userAuthentication;
   "queries/appointment": typeof queries_appointment;
   "queries/patientData": typeof queries_patientData;
+  "queries/shabob": typeof queries_shabob;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
