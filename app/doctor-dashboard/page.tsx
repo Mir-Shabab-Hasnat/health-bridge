@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import UserInfo from "@/app/patient-dashboard/UserInfo";
 import { useRouter } from "next/navigation";
 import {
     ColumnDef,
@@ -22,26 +20,42 @@ import {Input} from "@/components/ui/input"
 
 // Define an interface for the appointment data
 interface Appointment {
+    name : string;
+    severity: number;
     id: number;
     issue: string;
     status: string;
     date: string;
+    
 }
 
 
 // Dummy appointment data
 const appointmentData = [
-    { id: 1, issue: "Fever", status: "Pending", date: "2024-10-15" },
-    { id: 2, issue: "Burn", status: "Confirm", date: "2024-10-14" },
-    { id: 3, issue: "Headache", status: "Done", date: "2024-10-13" },
-    { id: 4, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
-    { id: 5, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
-    { id: 6, issue: "Fever", status: "Done", date: "2024-09-13" },
-    { id: 7, issue: "Broken Leg", status: "Confirm", date: "2024-06-25" },
+    // { id: 1, issue: "Fever", status: "Pending", date: "2024-10-15" },
+    // { id: 2, issue: "Burn", status: "Confirm", date: "2024-10-14" },
+    // { id: 3, issue: "Headache", status: "Done", date: "2024-10-13" },
+    // { id: 4, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
+    // { id: 5, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
+    // { id: 6, issue: "Fever", status: "Done", date: "2024-09-13" },
+    // { id: 7, issue: "Broken Leg", status: "Confirm", date: "2024-06-25" },
+    { id: 1, name: "John", severity: 5, issue: "Fever", status: "Pending", date: "2024-10-15" },
+    { id: 2, name: "Doe", severity: 3, issue: "Burn", status: "Confirm", date: "2024-10-14" },
+    { id: 3, name: "Jane", severity: 2, issue: "Headache", status: "Done", date: "2024-10-13" },
+    { id: 4, name: "Doe", severity: 1, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
+    { id: 5, name: "John", severity: 4, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
 ];
 
 // Define columns for the appointment table
 const columns: ColumnDef<Appointment>[] = [
+    {
+        accessorKey: "name",
+        header: () => <span>Name</span>,
+    },
+    {
+        accessorKey: "severity",
+        header: () => <span>Severity</span>,
+    },
     {
         accessorKey: "issue",
         header: () => <span>Issue</span>,
@@ -58,15 +72,14 @@ const columns: ColumnDef<Appointment>[] = [
 
 const DoctorDashboard = () => {
     const router = useRouter();
-    const [isUserInfoOpen, setIsUserInfoOpen] = React.useState(false);
     const [searchQuery] = React.useState(""); // State for the search query
 
     // Dummy user details
-    const userDetails = {
-        name: "John Doe",
-        username: "johndoe",
-        email: "john.doe@example.com",
-    };
+    // const userDetails = {
+    //     name: "John Doe",
+    //     username: "johndoe",
+    //     email: "john.doe@example.com",
+    // };
 
 
     // Filter appointment data based on the search query
@@ -82,9 +95,9 @@ const DoctorDashboard = () => {
         getPaginationRowModel: getPaginationRowModel(),
     });
 
-    const handleSubmit = () => {
-        router.push("/form");
-    };
+    // const handleSubmit = () => {
+    //     router.push("/form");
+    // };
 
     return (
         <div className="page-container">
@@ -109,7 +122,7 @@ const DoctorDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                {header.column.columnDef.header()} {/* Render header here */}
+                                                {/* {header.column.columnDef.header()} Render header here */}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -126,7 +139,7 @@ const DoctorDashboard = () => {
                                                 <TableCell key={cell.id}
                                                 onClick={() => router.push(`/appointments/${row.original.id}`)} // Navigate to the new page with appointment ID
                                                 >
-                                                    {cell.getValue()}
+                                                    {/* {cell.getValue()} */}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
