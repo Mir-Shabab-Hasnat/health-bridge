@@ -8,6 +8,9 @@ import {useRouter} from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 
 
@@ -19,7 +22,9 @@ const formSchema = z.object({
 
 const LoginPage = () => {
 
-    const router = useRouter()
+    //const router = useRouter()
+
+    console.log("LoginPage@!!@!!@E#@!");
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -30,11 +35,43 @@ const LoginPage = () => {
     });
 
 
-    const handleSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log("Form Data: ", data);
+    // const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    //     console.log("Form Data: ", data);
 
-        router.push("/patient-dashboard")
-    }
+    // }
+    // const [username, setUsername] = useState('');
+    // const [password, setPassword] = useState('');
+    const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
+    console.log("authenticateewfdwedfcws");
+  
+    const handleSubmit = async (data : z.infer<typeof formSchema>) => {
+      try {
+        console.log("Form Data: ", data);
+        console.log(data)
+        const result: boolean | (string | boolean)[] = await authenticate({ username: data.email, password: data.password });
+  
+        if (Array.isArray(result)) {
+            console.log("result", result)
+          const [userId, isDoctor] = result;
+  
+          if (typeof userId === 'string') {
+            document.cookie = `userId=${userId}; path=/`;
+          }
+  
+          if (typeof isDoctor === 'boolean') {
+            document.cookie = `isDoctor=${isDoctor}; path=/`;
+          }
+  
+        } else if (typeof result === 'boolean') {
+          document.cookie = `loginSuccess=${result}; path=/`;
+        }
+  
+        alert('User registered successfully!');
+      } catch (error) {
+        console.error(error);
+        alert('Error registering user: ' + error)
+      }
+    };
 
     return (
         <div className="form-auth">
