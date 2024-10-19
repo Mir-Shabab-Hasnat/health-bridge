@@ -2,11 +2,8 @@
 
 import Image from "next/image";
 
-interface NavProps {
-    onUserIconClick: () => void;
-}
 
-const Nav: React.FC<NavProps> = () => {
+const Nav = () => {
     return (
         <nav className="nav-bar flex justify-between items-center px-4 py-2 bg-white shadow-md">
             {/* Left side: Logo */}
