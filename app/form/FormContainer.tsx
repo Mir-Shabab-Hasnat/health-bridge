@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { toast } from "@/hooks/use-toast";
+import { toast, useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -15,6 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ToastAction } from "@/components/ui/toast";
 
 // Update the schema to include new fields
 const FormSchema = z.object({
@@ -33,7 +34,13 @@ const FormSchema = z.object({
     
 });
 
-const FormContainer = () => {
+interface FormProps {
+    onSubmit: (data: z.infer<typeof FormSchema>) => void;
+}
+
+const FormContainer = ({onSubmit}: FormProps) => {
+    
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -45,16 +52,7 @@ const FormContainer = () => {
         },
     });
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        });
-    }
+    
 
     return (
         <div className="flex flex-col items-center justify-center bg-gray-500 rounded-lg p-4 h-auto">
