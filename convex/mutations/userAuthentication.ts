@@ -2,7 +2,6 @@
 
 import { genSaltSync, hashSync } from 'bcrypt-ts';
 import { ConvexError, v } from 'convex/values';
-
 import { mutation } from '../_generated/server';
 
 
@@ -53,7 +52,6 @@ export const registerUser = mutation({
       username: args.username,
     });
 
-        // Return the userId (or token)
         return { userId };
   },
 });
