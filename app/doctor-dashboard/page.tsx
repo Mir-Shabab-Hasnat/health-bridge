@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import UserInfo from "@/app/patient-dashboard/UserInfo";
 import { useRouter } from "next/navigation";
 import {
     ColumnDef,
@@ -74,15 +72,14 @@ const columns: ColumnDef<Appointment>[] = [
 
 const DoctorDashboard = () => {
     const router = useRouter();
-    const [isUserInfoOpen, setIsUserInfoOpen] = React.useState(false);
     const [searchQuery] = React.useState(""); // State for the search query
 
     // Dummy user details
-    const userDetails = {
-        name: "John Doe",
-        username: "johndoe",
-        email: "john.doe@example.com",
-    };
+    // const userDetails = {
+    //     name: "John Doe",
+    //     username: "johndoe",
+    //     email: "john.doe@example.com",
+    // };
 
 
     // Filter appointment data based on the search query
@@ -98,9 +95,9 @@ const DoctorDashboard = () => {
         getPaginationRowModel: getPaginationRowModel(),
     });
 
-    const handleSubmit = () => {
-        router.push("/form");
-    };
+    // const handleSubmit = () => {
+    //     router.push("/form");
+    // };
 
     return (
         <div className="page-container">
@@ -125,7 +122,7 @@ const DoctorDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                {header.column.columnDef.header()} {/* Render header here */}
+                                                {/* {header.column.columnDef.header()} Render header here */}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -142,7 +139,7 @@ const DoctorDashboard = () => {
                                                 <TableCell key={cell.id}
                                                 onClick={() => router.push(`/appointments/${row.original.id}`)} // Navigate to the new page with appointment ID
                                                 >
-                                                    {cell.getValue()}
+                                                    {/* {cell.getValue()} */}
                                                 </TableCell>
                                             ))}
                                         </TableRow>

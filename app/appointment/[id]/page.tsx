@@ -1,19 +1,35 @@
-
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
+// Define types for Appointment and Patient
+interface Patient {
+    name: string;
+    age: number;
+    gender: string;
+}
+
+interface Appointment {
+    id: number;
+    issue: string;
+    status: string;
+    date: string; // You can also use Date type if preferred
+    patient: Patient;
+}
+
 const AppointmentDetailsPage = () => {
     const { id } = useParams(); // Get the dynamic ID from the URL
     const router = useRouter();
-    const [appointment, setAppointment] = useState<any>(null);
+    
+    // Update the state to use the Appointment type
+    const [appointment, setAppointment] = useState<Appointment | null>(null);
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
 
     // Dummy data for appointment
-    const appointmentData = [
+    const appointmentData: Appointment[] = [
         { id: 1, issue: "Fever", status: "Pending", date: "2024-10-15", patient: { name: "John Doe", age: 30, gender: "Male" } },
         { id: 2, issue: "Burn", status: "Confirm", date: "2024-10-14", patient: { name: "Jane Smith", age: 25, gender: "Female" } },
         { id: 3, issue: "Headache", status: "Done", date: "2024-10-13", patient: { name: "Alex Brown", age: 40, gender: "Male" } },
