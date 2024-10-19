@@ -6,10 +6,8 @@ import { cn } from "@/lib/utils";
 import { Bot, Check, Trash, XCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { z } from 'zod';
 
-import OpenAI from "openai";
-import { zodResponseFormat } from "openai/helpers/zod";
+
 
 interface AIChatBoxProps {
   open: boolean;
@@ -18,13 +16,6 @@ interface AIChatBoxProps {
 
 
 
-const HealthcareResponseSchema = z.object({
-  issue: z.string(),
-  symptom: z.string(),
-  medication: z.string(),
-  others: z.string(),
-  severity: z.number(),
-});
 
 const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
   const {
@@ -67,13 +58,14 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
 
     // Outputting the result to the console (you can change this as needed)
     console.log(formattedMessages);
-    
+
     setSubmittedMessages(formattedMessages);
-    
+    console.log(submittedMessages)
+
     // sending request to analysis api to get analysis
     try {
         const response = await fetch("/api/analysis", {
-            method: "POST", 
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
@@ -91,9 +83,9 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
             console.log("Failed to fetch from API")
           }
     } catch (error) {
-        
+      console.log(error)
     }
-    
+
   };
 
   return (
@@ -133,7 +125,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
           {!error && messages.length === 0 && (
             <div className="flex h-full items-center justify-center gap-3">
               <Bot />
-              Send a "Hi" to the chatbot to get started
+              Send a &quot;Hi&quot; to the chatbot to get started
             </div>
           )}
         </div>
@@ -183,7 +175,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         )}
       </div>
       </div>
-      
+
     </div>
   );
 };

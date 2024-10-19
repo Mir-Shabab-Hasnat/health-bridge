@@ -1,9 +1,9 @@
-"use client"; 
+"use client";
 
 import { useState } from 'react';
-import { useMutation } from 'convex/react'; 
+import { useMutation } from 'convex/react';
 
-import { api } from '../../convex/_generated/api' 
+import { api } from '@/convex/_generated/api'
 
 export default function ProdTest() {
   const [username, setUsername] = useState('');
@@ -16,20 +16,20 @@ export default function ProdTest() {
       const result: boolean | (string | boolean)[] = await authenticate({ username, password });
 
       if (Array.isArray(result)) {
-        const [userId, isDoctor] = result; 
+        const [userId, isDoctor] = result;
 
         if (typeof userId === 'string') {
           document.cookie = `userId=${userId}; path=/`;
         }
 
         if (typeof isDoctor === 'boolean') {
-          document.cookie = `isDoctor=${isDoctor}; path=/`; 
+          document.cookie = `isDoctor=${isDoctor}; path=/`;
         }
 
       } else if (typeof result === 'boolean') {
         document.cookie = `loginSuccess=${result}; path=/`;
       }
-    
+
       alert('User registered successfully!');
     } catch (error) {
       console.error(error);

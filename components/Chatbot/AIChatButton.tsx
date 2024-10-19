@@ -6,7 +6,7 @@ import AIChatBox from "./AIChatBox";
 import { Button } from "../ui/button";
 import { Bot } from "lucide-react";
 
-const AIChatButton = ({onClick} : {onClick: () => void}) => {
+const AIChatButton = () => {
   const [chatBoxOpen, setChatBoxOpen] = useState(false);
 
   return (
