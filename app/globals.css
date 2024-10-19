@@ -269,7 +269,7 @@ body {
 .form-itself .form-pre-text h1{
   display: flex;
   flex-direction: column;
-  font-size: 39px;
+  font-size: 49px;
   font-weight: 500;
 }
 
@@ -278,10 +278,10 @@ body {
 }
 
 .form-itself .form-pre-text p {
-  padding-bottom: 1rem;
   color: rgba(255, 255, 255, 0.8);  /* Slightly lighter color */
   margin: 10px 0;
-  font-size: 13px;
+  font-size: 15px;
+  padding: 5px;
 }
 
 

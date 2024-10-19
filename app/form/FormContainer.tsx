@@ -130,9 +130,9 @@ const FormContainer = ({ onSubmit }: FormProps) => {
                     />
 
                     {/* Submit Button */}
-                    {/*<Button type="submit" disabled={!aiChatDone}>*/}
-                    {/*    Submit*/}
-                    {/*</Button>*/}
+                    <Button type="submit" disabled={!aiChatDone}>
+                        Submit
+                    </Button>
                 </form>
             </Form>
         </div>
