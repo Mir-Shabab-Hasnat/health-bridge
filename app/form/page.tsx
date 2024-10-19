@@ -7,12 +7,12 @@ import ChatContainer from "./ChatContainer";
 const FormAndChat = () => {
     return(
         <div>
-            <div>
+            <div className="form-container">
                 <FormContainer />
             </div>
 
 
-            <div>
+            <div className="chat-container">
                 <ChatContainer />
             </div>
         </div>
