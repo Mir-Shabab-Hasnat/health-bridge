@@ -1,19 +1,25 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Message, useChat } from "ai/react";
 import { cn } from "@/lib/utils";
 import { Bot, Check, Trash, XCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-
+interface ApiResponse {
+  issue?: string;
+  symptoms?: string;
+  medication?: string;
+  other?: string;
+  severity: number;
+}
 
 
 interface AIChatBoxProps {
   open: boolean;
   onClose: () => void;
-  setApiResponse: (response: any) => void
+  setApiResponse: (response: ApiResponse) => void
 }
 
 const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {

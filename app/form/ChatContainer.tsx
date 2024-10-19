@@ -14,7 +14,7 @@ interface ApiResponse {
 
 interface ChatContainerProps {
     
-    setChatResponse: (response: any) => void
+    setChatResponse: (response: ApiResponse) => void
   }
 
 const ChatContainer = ({setChatResponse}: ChatContainerProps) => {
