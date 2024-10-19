@@ -160,6 +160,9 @@ body {
 }
 
 .secondary-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
   font-size: 15px;
   margin: 20px 0;
@@ -195,7 +198,7 @@ body {
   flex-direction: column;
 }
 
-/*----- DASHBOARD ------*/
+
 .dashboard {
   font-size: 35px;
   display: flex;
@@ -204,3 +207,22 @@ body {
   color: #fff;
 }
 
+
+.dashboard h2 {
+  font-weight: 500;
+  padding-bottom: 2rem;
+}
+
+
+/*----- TABLE ------*/
+
+.table-dashboard {
+  border-radius: calc(var(--radius) - 2px);
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  max-width: 24rem/* 384px */;
+}

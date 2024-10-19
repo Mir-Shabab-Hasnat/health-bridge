@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 
 const formSchema = z.object({
-    email: z.string().email().min(6),
+    username: z.string().min(6),
     password: z.string().min(8),
 });
 
@@ -24,7 +24,7 @@ const LoginPage = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
     });
@@ -48,12 +48,12 @@ const LoginPage = () => {
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full flex flex-col gap-4">
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="username"
                         render={({field}) => (
                             <FormItem>
                                 <FormLabel>Email Address</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="your email" type="email" {...field} />
+                                    <Input placeholder="your username" type="username" {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
