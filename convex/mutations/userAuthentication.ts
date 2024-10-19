@@ -1,6 +1,6 @@
 "use server";
 
-import { compare, genSaltSync, hashSync } from "bcrypt-ts";
+import { compareSync, genSaltSync, hashSync } from "bcrypt-ts";
 import { ConvexError, v } from "convex/values";
 
 import { mutation } from "../_generated/server";
@@ -39,19 +39,16 @@ export const authenticate = mutation({
     // Attempt to log this user in
     if (existingUser) {
       // Check their password against their hash
-      compare(args.password, existingUser.hash).then((correctLogin) => {
-        if (correctLogin) {
-          // Their password is correct, so log them in
-          return [existingUser._id, existingUser.isDoctor];
-        } else {
-          // Their password is incorrect, so don't log them in
-          throw new ConvexError({
-            message: "Incorrect username or password.",
-            serverUsernameError: true,
-            serverPasswordError: true,
-          });
-        }
-      });
+      if (compareSync(args.password, existingUser.hash)) {
+        return [existingUser._id, existingUser.isDoctor];
+      } else {
+        // Their password is incorrect, so don't log them in
+        throw new ConvexError({
+          message: "Incorrect username or password.",
+          serverUsernameError: true,
+          serverPasswordError: true,
+        });
+      }
     }
 
     // Hash up the password for a registration
