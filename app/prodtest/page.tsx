@@ -1,39 +1,42 @@
 "use client";
 
-import { useState } from 'react';
 import { useMutation } from 'convex/react';
+import { useState } from 'react';
 
-import { api } from '@/convex/_generated/api'
+import { api } from '@/convex/_generated/api';
 
 export default function ProdTest() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const authenticate = useMutation(
+    api.mutations.userAuthentication.authenticate
+  );
 
   const handleRegister = async () => {
     try {
-
-      const result: boolean | (string | boolean)[] = await authenticate({ username, password });
+      const result: boolean | (string | boolean)[] = await authenticate({
+        username,
+        password,
+      });
 
       if (Array.isArray(result)) {
         const [userId, isDoctor] = result;
 
-        if (typeof userId === 'string') {
+        if (typeof userId === "string") {
           document.cookie = `userId=${userId}; path=/`;
         }
 
-        if (typeof isDoctor === 'boolean') {
+        if (typeof isDoctor === "boolean") {
           document.cookie = `isDoctor=${isDoctor}; path=/`;
         }
-
-      } else if (typeof result === 'boolean') {
+      } else if (typeof result === "boolean") {
         document.cookie = `loginSuccess=${result}; path=/`;
       }
 
-      alert('User registered successfully!');
+      alert("User registered successfully!");
     } catch (error) {
       console.error(error);
-      alert('Error registering user: ' + error)
+      alert("Error registering user: " + error);
     }
   };
 
