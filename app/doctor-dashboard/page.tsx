@@ -22,30 +22,30 @@ import { useQuery } from "convex/react";
 import { Id } from "@/convex/_generated/dataModel";
 
 // Define an interface for the appointment data
-interface Appointment {
-    name : string;
-    severity: number;
-    id: number;
-    issue: string;
-    status: string;
-    date: string;
-    
-}
-
 // interface Appointment {
-//     _id: Id<"appointment">;
-//     _creationTime: number;
+//     name : string;
 //     severity: number;
+//     id: number;
 //     issue: string;
 //     status: string;
-//     doctor: Id<"user">;
-//     end: string;
-//     medication: string;
-//     others: string;
-//     patient: Id<"user">;
-//     start: string;
-//     symptoms: string;
+//     date: string;
+    
 // }
+
+
+interface Appointment {
+    id: string;
+    doctor: string;
+    end: string;
+    issue: string;
+    medication: string;
+    others: string;
+    patient: string;
+    severity: number;
+    start: string;
+    status: string;
+    symptoms: string;
+  }
 
 // Dummy appointment data
 const appointmentData = [
@@ -88,7 +88,25 @@ const columns: ColumnDef<Appointment>[] = [
 ];
 
 const DoctorDashboard = () => {
-    const appointmentData = useQuery(api.queries.appointment.getAllAppointments)
+    const appointmentsData = useQuery(api.queries.appointment.getAllAppointments)
+
+    console.log("This is the appointment data", appointmentsData)
+
+      const appointments: Appointment[] = appointmentsData
+          ? appointmentsData.map((appointment) => ({
+              id: appointment._id.toString(), // Ensure _id is a string
+              doctor: appointment.doctor.toString(), // Convert Id<"user"> to string
+              end: appointment.end,
+              issue: appointment.issue,
+              medication: appointment.medication,
+              others: appointment.others,
+              patient: appointment.patient.toString(), // Convert Id<"user"> to string
+              severity: appointment.severity,
+              start: appointment.start,
+              status: appointment.status,
+              symptoms: appointment.symptoms,
+            }))
+          : [];
 
     const router = useRouter();
     const [searchQuery] = React.useState(""); // State for the search query
@@ -102,11 +120,17 @@ const DoctorDashboard = () => {
 
 
     // Filter appointment data based on the search query
-    const filteredAppointments = appointmentData?.filter((appointment) =>
+    const filteredAppointments = appointments?.filter((appointment) =>
         appointment.issue.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    ) || [];
+
+//     const filteredAppointments: Appointment[] = appointmentData?.filter((appointment) =>
+//     appointment.issue.toLowerCase().includes(searchQuery.toLowerCase())
+// ) || [];
 
     // Table instance
+
+
     const table = useReactTable({
         data: filteredAppointments, // Use filtered data for the table
         columns,
@@ -151,12 +175,12 @@ const DoctorDashboard = () => {
                                 {table.getRowModel().rows.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow key={row.id}
-                                        onClick={() => router.push(`/appointment/${row.original.id}`)} // Navigate to the new page with appointment ID
+                                        onClick={() => router.push(`/appointment/${row.id}`)} // Navigate to the new page with appointment ID
                                         >
                                             {row.getVisibleCells().map((cell) => (
                                                 // make it go to appointment page
                                                 <TableCell key={cell.id}
-                                                onClick={() => router.push(`/appointments/${row.original.id}`)} // Navigate to the new page with appointment ID
+                                                onClick={() => router.push(`/appointments/${row.id}`)} // Navigate to the new page with appointment ID
                                                 >
                                                     {/* {cell.getValue()} */}
                                                 </TableCell>
