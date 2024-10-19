@@ -17,6 +17,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import {Input} from "@/components/ui/input"
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
 
 // Define an interface for the appointment data
 interface Appointment {
@@ -29,6 +32,20 @@ interface Appointment {
     
 }
 
+// interface Appointment {
+//     _id: Id<"appointment">;
+//     _creationTime: number;
+//     severity: number;
+//     issue: string;
+//     status: string;
+//     doctor: Id<"user">;
+//     end: string;
+//     medication: string;
+//     others: string;
+//     patient: Id<"user">;
+//     start: string;
+//     symptoms: string;
+// }
 
 // Dummy appointment data
 const appointmentData = [
@@ -44,7 +61,7 @@ const appointmentData = [
     { id: 3, name: "Jane", severity: 2, issue: "Headache", status: "Done", date: "2024-10-13" },
     { id: 4, name: "Doe", severity: 1, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
     { id: 5, name: "John", severity: 4, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
-];
+]; 
 
 // Define columns for the appointment table
 const columns: ColumnDef<Appointment>[] = [
@@ -71,6 +88,8 @@ const columns: ColumnDef<Appointment>[] = [
 ];
 
 const DoctorDashboard = () => {
+    const appointmentData = useQuery(api.queries.appointment.getAllAppointments)
+
     const router = useRouter();
     const [searchQuery] = React.useState(""); // State for the search query
 
@@ -83,7 +102,7 @@ const DoctorDashboard = () => {
 
 
     // Filter appointment data based on the search query
-    const filteredAppointments = appointmentData.filter((appointment) =>
+    const filteredAppointments = appointmentData?.filter((appointment) =>
         appointment.issue.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
