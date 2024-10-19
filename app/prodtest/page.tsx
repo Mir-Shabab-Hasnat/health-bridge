@@ -3,19 +3,33 @@
 import { useState } from 'react';
 import { useMutation } from 'convex/react'; 
 
-import { api } from '../../convex/_generated/api'
+import { api } from '../../convex/_generated/api' 
 
 export default function ProdTest() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const register = useMutation(api.mutations.userAuthentication.registerUser)
+  const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
 
   const handleRegister = async () => {
     try {
-      const { userId } = await register({ username, password });
-      
-      document.cookie = `currentUser=${userId}; isDoctor=${isDoctor} path=/;`;
 
+      const result: boolean | (string | boolean)[] = await authenticate({ username, password });
+
+      if (Array.isArray(result)) {
+        const [userId, isDoctor] = result; 
+
+        if (typeof userId === 'string') {
+          document.cookie = `userId=${userId}; path=/`;
+        }
+
+        if (typeof isDoctor === 'boolean') {
+          document.cookie = `isDoctor=${isDoctor}; path=/`; 
+        }
+
+      } else if (typeof result === 'boolean') {
+        document.cookie = `loginSuccess=${result}; path=/`;
+      }
+    
       alert('User registered successfully!');
     } catch (error) {
       console.error(error);

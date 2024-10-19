@@ -2,8 +2,8 @@
 
 import { genSaltSync, hashSync } from 'bcrypt-ts';
 import { ConvexError, v } from 'convex/values';
-import { mutation } from '../_generated/server';
 
+import { mutation } from '../_generated/server';
 
 export const authenticate = mutation({
   args: {
@@ -54,6 +54,6 @@ export const authenticate = mutation({
       });
     }
 
-    return userId as string, false;
+    return [userId as string, false];
   },
 });

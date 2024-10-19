@@ -2,16 +2,20 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
 
-  // this chec if cookies has currentUser and isDoctor
   const currentUser = request.cookies.get("currentUser")?.value;
   const isDoctor = request.cookies.get("isDoctor")?.value;
 
-  if (currentUser && !request.nextUrl.pathname.startsWith("/dashboard")) {
-    return Response.redirect(new URL("/dashboard", request.url));
+
+  if (!currentUser && !request.nextUrl.pathname.startsWith("/home")) {
+    return Response.redirect(new URL("/home", request.url));
   }
 
-  if (!currentUser && !request.nextUrl.pathname.startsWith("/login")) {
-    return Response.redirect(new URL("/login", request.url));
+  if (currentUser && isDoctor && !request.nextUrl.pathname.startsWith("/doctor-dashboard")) {
+    return Response.redirect(new URL("/doctor-dashboard", request.url));
+  }
+
+  if (currentUser && !isDoctor && !request.nextUrl.pathname.startsWith("/patient-dashboard")) {
+    return Response.redirect(new URL("/patient-dashboard", request.url));
   }
 }
 
