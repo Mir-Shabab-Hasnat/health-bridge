@@ -4,9 +4,13 @@
 
 const FormContainer = () => {
 
-    return(
-        <div>
-            form
+    return (
+        <div className="flex flex-col items-center bg-green-500 text-white p-4">
+            <div>
+                form
+                
+            </div>
+            
         </div>
     );
 }
