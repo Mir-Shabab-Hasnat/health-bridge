@@ -7,9 +7,9 @@ export function middleware(request: NextRequest) {
 
   if (request.cookies.get("userId") && request.nextUrl.pathname === "/") {
     if (request.cookies.get("isDoctor")?.value === "true") {
-      return NextResponse.redirect(`http://${host}/doctor-dashboard`);
+      return NextResponse.redirect(`https://${host}/doctor-dashboard`);
     } else {
-      return NextResponse.rewrite(`http://${host}/patient-dashboard`);
+      return NextResponse.rewrite(`https://${host}/patient-dashboard`);
     }
   }
 
@@ -18,25 +18,27 @@ export function middleware(request: NextRequest) {
   // Doctor-related redirects
   if (request.cookies.get("isDoctor")?.value === "true") {
     if (pathname === "/patient-dashboard" || pathname === "/") {
-      return NextResponse.redirect(`http://${host}/doctor-dashboard`);
+      return NextResponse.redirect(`https://${host}/doctor-dashboard`);
     }
 
     // Handle dynamic route for /appointment/:id
     const appointmentMatch = pathname.match(/^\/appointment\/(\d+)$/);
     if (appointmentMatch) {
       const appointmentId = appointmentMatch[1]; // Capture the actual ID
-      return NextResponse.redirect(`http://${host}/appointment/${appointmentId}`);
+      return NextResponse.redirect(
+        `https://${host}/appointment/${appointmentId}`
+      );
     }
   } else {
     // Non-doctor (patient) related redirects
     if (pathname === "/doctor-dashboard" || pathname === "/") {
-      return NextResponse.redirect(`http://${host}/patient-dashboard`);
+      return NextResponse.redirect(`https://${host}/patient-dashboard`);
     }
 
     // Handle dynamic route for /appointment/:id -> redirect to form
     const appointmentMatch = pathname.match(/^\/appointment\/(\d+)$/);
     if (appointmentMatch) {
-      return NextResponse.redirect(`http://${host}/form`);
+      return NextResponse.redirect(`https://${host}/form`);
     }
   }
 
