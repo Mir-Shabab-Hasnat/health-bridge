@@ -54,6 +54,6 @@ export const authenticate = mutation({
       });
     }
 
-    return userId as string, false;
+    return [userId as string, false];
   },
 });
