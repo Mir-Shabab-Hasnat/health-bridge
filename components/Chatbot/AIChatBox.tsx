@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef} from "react";
 import { Message, useChat } from "ai/react";
 import { cn } from "@/lib/utils";
 import { Bot, Check, Trash, XCircle } from "lucide-react";
@@ -20,6 +20,7 @@ interface AIChatBoxProps {
   open: boolean;
   onClose: () => void;
   setApiResponse: (response: ApiResponse) => void
+  
 }
 
 const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
@@ -51,6 +52,8 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
     }
   }, [open]);
 
+  
+
   const lastMessageIsUser = messages[messages.length - 1]?.role === "user";
 
   const handleCheckClick = async () => {
@@ -63,6 +66,7 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
 
     // Outputting the result to the console (you can change this as needed)
     console.log(formattedMessages);
+    
 
     onClose()
     
