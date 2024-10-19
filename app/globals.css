@@ -152,7 +152,7 @@ body {
 }
 
 .form-auth .pre-form-text h1 {
-  font-size: 33px;
+  font-size: 43px;
   font-weight: 700;
   padding: 2px 0;
 }
@@ -168,6 +168,7 @@ body {
   font-weight: 600;
   font-size: 15px;
   margin: 20px 0;
+  width: 200px;
 }
 
 .secondary-btn:hover {
@@ -205,6 +206,7 @@ body {
   font-size: 35px;
   display: flex;
   flex-direction: column;
+  margin: 10px;
   padding: 20px;
   color: #fff;
 }
@@ -347,4 +349,9 @@ body {
   font-weight: 700;
   margin: 8px 0;
   align-items: center;
+  padding-bottom: 10px;
 }
+
+
+
+

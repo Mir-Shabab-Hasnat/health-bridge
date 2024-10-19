@@ -93,7 +93,7 @@ const PatientDashboard = () => {
         <div className="page-container">
             <Nav onUserIconClick={handleUserIconClick} />
             <div className="dashboard">
-                <h2>Recent Appointments</h2>
+                <h2>Recent Appointments 📖</h2>
                 <div>
                     <div className="search-bar">
                         {/* Search Bar */}
@@ -148,7 +148,7 @@ const PatientDashboard = () => {
                 </div>
 
                 <Button className="secondary-btn" onClick={handleSubmit}>
-                    form and chatbot
+                    form and chatbot 🤖
                 </Button>
             </div>
 
