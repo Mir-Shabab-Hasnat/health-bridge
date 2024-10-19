@@ -2,11 +2,13 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import {
     ColumnDef,
     useReactTable,
     getCoreRowModel,
     getPaginationRowModel,
+    flexRender,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -90,7 +92,16 @@ const columns: ColumnDef<Appointment>[] = [
 const DoctorDashboard = () => {
     const appointmentsData = useQuery(api.queries.appointment.getAllAppointments)
 
+    useEffect(() => {
+        if (appointmentsData) {
+            console.log("This is the appointment data:", appointmentsData);
+        }
+    }, [appointmentsData]); 
+
+
+    // print with useQEffect
     console.log("This is the appointment data", appointmentsData)
+
 
       const appointments: Appointment[] = appointmentsData
           ? appointmentsData.map((appointment) => ({
@@ -166,6 +177,10 @@ const DoctorDashboard = () => {
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
                                                 {/* {header.column.columnDef.header()} Render header here */}
+
+                                                {header.isPlaceholder? null:flexRender(header.column.columnDef.header,
+                          header.getContext()
+                        )}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -183,13 +198,14 @@ const DoctorDashboard = () => {
                                                 onClick={() => router.push(`/appointments/${row.id}`)} // Navigate to the new page with appointment ID
                                                 >
                                                     {/* {cell.getValue()} */}
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
                                     ))
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={3} className="h-24 text-center">
+                                        <TableCell colSpan={columns.length} className="h-24 text-center">
                                             No results.
                                         </TableCell>
                                     </TableRow>
