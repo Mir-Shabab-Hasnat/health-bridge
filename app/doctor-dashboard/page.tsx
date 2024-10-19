@@ -51,7 +51,10 @@ const DoctorDashboard = () => {
             <TableBody>
                 {appointments.map((appointment) => (
                     <TableRow key={appointment.id}>
-                        <TableCell className="font-medium">{appointment.issue}</TableCell>
+                        <TableCell 
+                        className="font-medium cursor-pointer"
+                        onClick={() => router.push(`/appointment/${appointment.id}`)}
+                        >{appointment.issue}</TableCell>
                         <TableCell>{appointment.status}</TableCell>
                         <TableCell>{appointment.doctor}</TableCell>
                         <TableCell className="text-right">{appointment.patient}</TableCell>

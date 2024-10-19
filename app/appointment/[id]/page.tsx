@@ -45,7 +45,7 @@ const AppointmentDetailsPage = () => {
             setAppointment(foundAppointment);
             setSelectedDate(foundAppointment.date); // Set default date
         } else {
-            router.push("/doctor-dashboard"); // Redirect if appointment not found
+            console.log("not found lol")
         }
     }, [id, router]);
 
