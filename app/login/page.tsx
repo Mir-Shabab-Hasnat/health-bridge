@@ -8,6 +8,9 @@ import {useRouter} from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 
 
@@ -18,9 +21,6 @@ const formSchema = z.object({
 
 
 const LoginPage = () => {
-
-    const router = useRouter()
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -29,12 +29,37 @@ const LoginPage = () => {
         },
     });
 
-
-    const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
+  
+    const handleSubmit = async (data : z.infer<typeof formSchema>) => {
+      try {
         console.log("Form Data: ", data);
+        console.log(data)
+        const result: boolean | (string | boolean)[] = await authenticate({ username: data.email, password: data.password });
 
-        router.push("/patient-dashboard")
-    }
+
+        if (Array.isArray(result)) {
+            console.log("result", result)
+          const [userId, isDoctor] = result;
+  
+          if (typeof userId === 'string') {
+            document.cookie = `userId=${userId}; path=/`;
+          }
+  
+          if (typeof isDoctor === 'boolean') {
+            document.cookie = `isDoctor=${isDoctor}; path=/`;
+          }
+  
+        } else if (typeof result === 'boolean') {
+          document.cookie = `loginSuccess=${result}; path=/`;
+        }
+  
+        alert('User registered successfully!');
+      } catch (error) {
+        console.error(error);
+        alert('Error registering user: ' + error)
+      }
+    };
 
     return (
         <div className="form-auth">
