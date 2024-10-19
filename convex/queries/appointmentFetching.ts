@@ -14,7 +14,7 @@ export const getAllAppointments = query({
       });
     }
 
-    return allAppointments;
+    return allAppointments.collect();
   },
 });
 
