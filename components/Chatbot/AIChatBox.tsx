@@ -8,8 +8,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { z } from 'zod';
 
-import OpenAI from "openai";
-import { zodResponseFormat } from "openai/helpers/zod";
 
 interface AIChatBoxProps {
   open: boolean;
@@ -67,13 +65,13 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
 
     // Outputting the result to the console (you can change this as needed)
     console.log(formattedMessages);
-    
+
     setSubmittedMessages(formattedMessages);
-    
+
     // sending request to analysis api to get analysis
     try {
         const response = await fetch("/api/analysis", {
-            method: "POST", 
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
@@ -91,9 +89,9 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
             console.log("Failed to fetch from API")
           }
     } catch (error) {
-        
+
     }
-    
+
   };
 
   return (
@@ -183,7 +181,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
         )}
       </div>
       </div>
-      
+
     </div>
   );
 };
