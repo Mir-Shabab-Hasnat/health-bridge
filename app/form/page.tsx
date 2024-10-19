@@ -1,14 +1,14 @@
 "use client";
 
 import { useMutation } from "convex/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/hooks/use-toast";
 
-import { getUserId } from "../api/cookieUserId/getUserId";
+
 import ChatContainer from "./ChatContainer";
 import FormContainer, { FormSchema } from "./FormContainer";
 
@@ -34,6 +34,18 @@ const FormAndChat = () => {
     api.mutations.appointment.createAppointment
   );
 
+  const [userId, setUserId] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchUserId() {
+      const response = await fetch("/api/cookieUserId");
+      const data = await response.json();
+      setUserId(data.userId);
+    }
+
+    fetchUserId();
+  }, []);
+
   // Handle a form being submitted
   function onSubmit(data: z.infer<typeof FormSchema>) {
     // Grab the username and display back in a toast
@@ -44,7 +56,8 @@ const FormAndChat = () => {
 
     console.log("hi");
 
-    const userId = getUserId.toString();
+    
+    console.log(userId)
     // If the API from ChatGPT has a response AND the userId is in the
     // cookies, pass it to Convex
     if (chatResponse && userId) {
