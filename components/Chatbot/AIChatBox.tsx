@@ -41,6 +41,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [submittedMessages, setSubmittedMessages] = useState<string>();
+  const [apiResponse, setApiResponse] = useState(null)
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -66,53 +67,33 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
 
     // Outputting the result to the console (you can change this as needed)
     console.log(formattedMessages);
-    // Alternatively, you could set this formatted string to the component state to display it in the UI
-    setSubmittedMessages(formattedMessages);
-    // onClose()
-    // setMessages([])
-
-    const openai = new OpenAI({
-      apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY
-    });
     
-    const completion = await openai.beta.chat.completions.parse({
-      model: "gpt-4o-mini",
-            messages: [
-              {
-                role: "system",
-                content: "You are a healthcare assistant that provides structured responses in JSON format. Please provide a healthcare assessment in the following structured format: Issue: (The primary health concern), symptom: (List the symptoms), Medication: (any medication the patient is using), Others: (Additional notes or observation), Severity: (a number between the range 1-99 that you will give by assessing the patient's situation)"
-              },
-              { role: "user", content: formattedMessages }
-            ],
-            response_format: zodResponseFormat(HealthcareResponseSchema, "event")
-    })
+    setSubmittedMessages(formattedMessages);
+    
+    // sending request to analysis api to get analysis
+    try {
+        const response = await fetch("/api/analysis", {
+            method: "POST", 
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: formattedMessages
+            }),
+          });
 
-    const event = completion.choices[0].message.parsed;
+          if (response.ok) {
+            const jsonResponse = await response.json();
 
-    console.log(event)
-
-    // try {
-    //   const response = await fetch("/api/health", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ messages: formattedMessages }),
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-
-    //   const data = await response.json();
-    //   console.log("API Response:", data); // Handle your API response as needed
-
-    //   // You can process the response data here and display it or use it in your UI
-    //   // For example:
-    //   // setResponseData(data);
-    // } catch (error) {
-    //   console.error("Error calling OpenAI API:", error);
-    // }
+            setApiResponse(jsonResponse)
+            console.log(jsonResponse)
+          } else {
+            console.log("Failed to fetch from API")
+          }
+    } catch (error) {
+        
+    }
+    
   };
 
   return (
@@ -190,8 +171,18 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
             Send
           </Button>
         </form>
+
+        <div>
+            {apiResponse && (
+                <div>
+                    <h3>API Response:</h3>
+                    <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+                </div>
+            )
+        }
+        </div>
       </div>
-      {submittedMessages}
+      
     </div>
   );
 };
