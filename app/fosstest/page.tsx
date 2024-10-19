@@ -1,13 +1,11 @@
 "use client";
 
-import { useQuery } from 'convex/react';
+import { useQuery } from "convex/react";
 
-import { api } from '@/convex/_generated/api';
+import { api } from "@/convex/_generated/api";
 
 const AppointmentPage = () => {
-  const appointmentData = useQuery(
-    api.queries.appointmentFetching.getAllAppointments
-  );
+  const appointmentData = useQuery(api.queries.appointment.getAllAppointments);
 
   return (
     <div>

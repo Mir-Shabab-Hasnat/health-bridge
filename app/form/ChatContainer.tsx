@@ -4,26 +4,26 @@ import AIChatBox from "@/components/Chatbot/AIChatBox";
 import AIChatButton from "@/components/Chatbot/AIChatButton";
 import { useState } from "react";
 
+// API response from ChatGPT analysis
 interface ApiResponse {
-    issue: string;
-    symptoms: string;
-    medication: string;
-    other: string;
-    severity: number;
+  issue: string;
+  symptoms: string;
+  medication: string;
+  other: string;
+  severity: number;
 }
 
 interface ChatContainerProps {
+  setChatResponse: (response: ApiResponse) => void;
+}
 
-    setChatResponse: (response: ApiResponse) => void
+const ChatContainer = ({ setChatResponse }: ChatContainerProps) => {
+  const [open, setOpen] = useState(false);
+  const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
+
+  if (apiResponse) {
+    setChatResponse(apiResponse);
   }
-
-const ChatContainer = ({setChatResponse}: ChatContainerProps) => {
-    const [open, setOpen] = useState(false);
-    const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null)
-
-    if (apiResponse) {
-        setChatResponse(apiResponse)
-    }
 
     return (
         <div className="flex flex-col items-center justify-center rounded-lg p-4 h-auto">

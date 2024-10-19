@@ -1,5 +1,5 @@
-import { defineSchema, defineTable } from 'convex/server';
-import { v } from 'convex/values';
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
 
 export default defineSchema({
   user: defineTable({
@@ -25,6 +25,7 @@ export default defineSchema({
     patient: v.id("user"),
     severity: v.number(),
     start: v.string(),
+    status: v.string(),
     symptoms: v.string(),
   })
     .index("by_patient", ["patient"])
