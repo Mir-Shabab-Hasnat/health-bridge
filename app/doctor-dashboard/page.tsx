@@ -2,11 +2,13 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import {
     ColumnDef,
     useReactTable,
     getCoreRowModel,
     getPaginationRowModel,
+    flexRender,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -17,20 +19,35 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import {Input} from "@/components/ui/input"
-import Nav from "./Nav";
-
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
 
 // Define an interface for the appointment data
+// interface Appointment {
+//     name : string;
+//     severity: number;
+//     id: number;
+//     issue: string;
+//     status: string;
+//     date: string;
+    
+// }
+
+
 interface Appointment {
-    name : string;
-    severity: number;
-    id: number;
+    id: string;
+    doctor: string;
+    end: string;
     issue: string;
+    medication: string;
+    others: string;
+    patient: string;
+    severity: number;
+    start: string;
     status: string;
-    date: string;
-
-}
-
+    symptoms: string;
+  }
 
 // Dummy appointment data
 const appointmentData = [
@@ -46,7 +63,7 @@ const appointmentData = [
     { id: 3, name: "Jane", severity: 2, issue: "Headache", status: "Done", date: "2024-10-13" },
     { id: 4, name: "Doe", severity: 1, issue: "Chest Pain", status: "Pending", date: "2024-07-23" },
     { id: 5, name: "John", severity: 4, issue: "Broken Arm", status: "Done", date: "2024-08-09" },
-];
+]; 
 
 // Define columns for the appointment table
 const columns: ColumnDef<Appointment>[] = [
@@ -73,6 +90,35 @@ const columns: ColumnDef<Appointment>[] = [
 ];
 
 const DoctorDashboard = () => {
+    const appointmentsData = useQuery(api.queries.appointment.getAllAppointments)
+
+    useEffect(() => {
+        if (appointmentsData) {
+            console.log("This is the appointment data:", appointmentsData);
+        }
+    }, [appointmentsData]); 
+
+
+    // print with useQEffect
+    console.log("This is the appointment data", appointmentsData)
+
+
+      const appointments: Appointment[] = appointmentsData
+          ? appointmentsData.map((appointment) => ({
+              id: appointment._id.toString(), // Ensure _id is a string
+              doctor: appointment.doctor.toString(), // Convert Id<"user"> to string
+              end: appointment.end,
+              issue: appointment.issue,
+              medication: appointment.medication,
+              others: appointment.others,
+              patient: appointment.patient.toString(), // Convert Id<"user"> to string
+              severity: appointment.severity,
+              start: appointment.start,
+              status: appointment.status,
+              symptoms: appointment.symptoms,
+            }))
+          : [];
+
     const router = useRouter();
     const [searchQuery] = React.useState(""); // State for the search query
 
@@ -85,11 +131,17 @@ const DoctorDashboard = () => {
 
 
     // Filter appointment data based on the search query
-    const filteredAppointments = appointmentData.filter((appointment) =>
+    const filteredAppointments = appointments?.filter((appointment) =>
         appointment.issue.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    ) || [];
+
+//     const filteredAppointments: Appointment[] = appointmentData?.filter((appointment) =>
+//     appointment.issue.toLowerCase().includes(searchQuery.toLowerCase())
+// ) || [];
 
     // Table instance
+
+
     const table = useReactTable({
         data: filteredAppointments, // Use filtered data for the table
         columns,
@@ -103,7 +155,6 @@ const DoctorDashboard = () => {
 
     return (
         <div className="page-container">
-            <Nav />
             <div className="dashboard">
                 <h2>Recent Appointments</h2>
                 <div>
@@ -125,7 +176,11 @@ const DoctorDashboard = () => {
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
                                             <TableHead key={header.id}>
-                                                 {header.column.columnDef.header()}
+                                                {/* {header.column.columnDef.header()} Render header here */}
+
+                                                {header.isPlaceholder? null:flexRender(header.column.columnDef.header,
+                          header.getContext()
+                        )}
                                             </TableHead>
                                         ))}
                                     </TableRow>
@@ -135,21 +190,22 @@ const DoctorDashboard = () => {
                                 {table.getRowModel().rows.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow key={row.id}
-                                        onClick={() => router.push(`/appointment/${row.original.id}`)} // Navigate to the new page with appointment ID
+                                        onClick={() => router.push(`/appointment/${row.id}`)} // Navigate to the new page with appointment ID
                                         >
                                             {row.getVisibleCells().map((cell) => (
                                                 // make it go to appointment page
                                                 <TableCell key={cell.id}
-                                                onClick={() => router.push(`/appointments/${row.original.id}`)} // Navigate to the new page with appointment ID
+                                                onClick={() => router.push(`/appointments/${row.id}`)} // Navigate to the new page with appointment ID
                                                 >
-                                                     {cell.getValue()}
+                                                    {/* {cell.getValue()} */}
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                 </TableCell>
                                             ))}
                                         </TableRow>
                                     ))
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={3} className="h-24 text-center">
+                                        <TableCell colSpan={columns.length} className="h-24 text-center">
                                             No results.
                                         </TableCell>
                                     </TableRow>
