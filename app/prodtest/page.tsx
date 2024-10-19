@@ -1,22 +1,61 @@
 "use client";
 
-import { useQuery } from 'convex/react';
+import { useMutation } from 'convex/react';
+import { useState } from 'react';
 
 import { api } from '@/convex/_generated/api';
 
-const AppointmentPage = () => {
-  const appointmentData = useQuery(
-    api.queries.appointmentFetching.getAllAppointments
+export default function ProdTest() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const authenticate = useMutation(
+    api.mutations.userAuthentication.authenticate
   );
+
+  const handleRegister = async () => {
+    try {
+      const result: boolean | (string | boolean)[] = await authenticate({
+        username,
+        password,
+      });
+
+      if (Array.isArray(result)) {
+        const [userId, isDoctor] = result;
+
+        if (typeof userId === "string") {
+          document.cookie = `userId=${userId}; path=/`;
+        }
+
+        if (typeof isDoctor === "boolean") {
+          document.cookie = `isDoctor=${isDoctor}; path=/`;
+        }
+      } else if (typeof result === "boolean") {
+        document.cookie = `loginSuccess=${result}; path=/`;
+      }
+
+      alert("User registered successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Error registering user: " + error);
+    }
+  };
 
   return (
     <div>
-      {appointmentData?.map((appointment, idx) => (
-        <p key={idx}>{appointment.patient}</p>
-      ))}
-      <p>hi</p>
+      <h1>Register User</h1>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
-};
-
-export default AppointmentPage;
+}

@@ -171,3 +171,36 @@ body {
 }
 
 
+/*----- NAVBAR ------*/
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: black;
+}
+
+
+
+/*----- DASHBOARD ------*/
+.page-container {
+  width: 100%;
+  min-height: 100vh; /* Ensures it takes the full height of the viewport */
+  background-image: url('/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/*----- DASHBOARD ------*/
+.dashboard {
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  color: #fff;
+}
+
