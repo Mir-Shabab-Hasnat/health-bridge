@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt-ts": "^5.0.2",
     "convex": "^1.16.6",
     "next": "14.2.15",
     "react": "^18",
