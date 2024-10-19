@@ -8,8 +8,6 @@ export function middleware(request: NextRequest) {
 
   if (!currentUser && !request.nextUrl.pathname.startsWith("/home")) {
     return Response.redirect(new URL("/home", request.url));
-  if (currentUser && !request.nextUrl.pathname.startsWith("/patient-dashboard")) {
-    return Response.redirect(new URL("/patient-dashboard", request.url));
   }
 
   if (currentUser && isDoctor && !request.nextUrl.pathname.startsWith("/doctor-dashboard")) {
@@ -22,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|.\.png$).)"],
 };

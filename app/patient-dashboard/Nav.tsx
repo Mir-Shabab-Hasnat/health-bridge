@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { UserIcon } from "lucide-react"; // Example user profile icon, you can use any icon from lucide-react
 
 interface NavProps {

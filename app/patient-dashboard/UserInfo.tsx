@@ -2,7 +2,7 @@
 
 import { Avatar } from "@/components/ui/avatar"; // Assuming you have these ShadCN components
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerTrigger, DrawerContent, DrawerClose } from "@/components/ui/drawer"; // Custom drawer based on ShadCN styles
+import { Drawer, DrawerContent, DrawerClose } from "@/components/ui/drawer"; // Custom drawer based on ShadCN styles
 
 interface UserInfoProps {
     isOpen: boolean;
@@ -16,7 +16,7 @@ interface UserInfoProps {
 
 const UserInfo: React.FC<UserInfoProps> = ({ isOpen, onClose, userDetails }) => {
     return (
-        <Drawer open={isOpen} onOpenChange={onClose} placement="right"> {/* Set placement to "right" */}
+        <Drawer open={isOpen} onOpenChange={onClose}> {/* Set placement to "right" */}
             <DrawerContent className="p-4">
                 <DrawerClose className="absolute right-2 top-2">
                     <Button variant="ghost">X</Button>
@@ -24,7 +24,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ isOpen, onClose, userDetails }) => 
                 <div className="p-4">
                     <h2 className="text-lg font-semibold">{userDetails.username}&rsquo;s Profile</h2>
                     <div className="flex flex-col items-center">
-                        <Avatar className="mb-4" name={userDetails.name} />
+                        <Avatar className="mb-4" />
                         <p className="text-sm font-medium">
                             <strong>Name:</strong> {userDetails.name}
                         </p>
