@@ -1,33 +1,20 @@
-import twilio from "twilio"
+import { NextRequest, NextResponse } from "next/server";
+import { createMessage } from "./twillioService"; // Import from service
 
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { to, body: messageBody } = body;
 
-const accountSid: string | undefined = process.env.TWILIO_ACCOUNT_SID
+  if (!to || !messageBody) {
+    return NextResponse.json({ error: 'Missing "to" or "body" in request' }, { status: 400 });
+  }
 
-const authToken: string | undefined = process.env.TWILIO_AUTH_TOKEN
-
-const phoneNUm: string | undefined = process.env.TWILIO_PHONE_NUMBER
-
-if (!accountSid || !authToken) {
-  console.log("eror")
-    throw new Error("Twillio credentials are not set in the env")
-    
+  try {
+    const message = await createMessage(to, messageBody);
+    return NextResponse.json({ success: true, message: message.body });
+  } catch (error) {
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+  }
 }
 
-const client = twilio(accountSid, authToken)
-
-async function createMessage(): Promise<void> {
-    try {
-      const message = await client.messages.create({
-        body: "This is the ship that made the Kessel Run in fourteen parsecs?",
-        from: phoneNUm, // Replace with your Twilio number
-        to: "+16393843665", // Replace with the recipient's phone number
-      });
   
-      console.log("Message sent:", message.body);
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  }
-  
-  // Call the function to send the message
-  createMessage();
