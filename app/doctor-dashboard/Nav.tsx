@@ -1,13 +1,9 @@
 "use client";
 
-import { UserIcon } from "lucide-react";
 import Image from "next/image";
 
-interface NavProps {
-    onUserIconClick: () => void;
-}
 
-const Nav: React.FC<NavProps> = ({ onUserIconClick }) => {
+const Nav = () => {
     return (
         <nav className="nav-bar flex justify-between items-center px-4 py-2 bg-white shadow-md">
             {/* Left side: Logo */}
@@ -20,18 +16,6 @@ const Nav: React.FC<NavProps> = ({ onUserIconClick }) => {
                     className="mr-2"
                 />
                 <p className="font-bold text-xl">health-bridge</p>
-            </div>
-
-            {/* Right side: User profile icon */}
-            <div className="flex items-center space-x-4">
-                <button
-                    onClick={() => {
-                        console.log("User icon clicked"); // Debugging log
-                        onUserIconClick(); // Call the passed function
-                    }}
-                >
-                    <UserIcon className="h-6 w-6" />
-                </button>
             </div>
         </nav>
     );

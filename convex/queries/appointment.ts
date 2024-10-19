@@ -1,8 +1,8 @@
 "use server";
 
-import { ConvexError, v } from "convex/values";
+import { ConvexError, v } from 'convex/values';
 
-import { query } from "../_generated/server";
+import { query } from '../_generated/server';
 
 export const getAllAppointments = query({
   handler: async (ctx) => {
@@ -29,6 +29,7 @@ export const getPatientAppointments = query({
     // This gets the QueryInitializer
     const userAppointments = await ctx.db
       .query("appointment")
+      .withIndex("by_patient")
       .filter((q) => q.eq(q.field("patient"), args.userId));
 
     // Stop if nothing was received
