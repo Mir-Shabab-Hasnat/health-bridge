@@ -1,88 +1,142 @@
 "use client";
 
-import { useMutation } from "convex/react";
-import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
+// Update the schema to include new fields
+export const FormSchema = z.object({
+    name: z.string().min(1, {
+        message: "Name is required.",
+    }),
+    dateOfBirth: z.string().min(1, {
+        message: "Date of birth is required.",
+    }),
+    phoneNumber: z.string().min(1, {
+        message: "Phone number is required.",
+    }),
+    healthCardNumber: z.string().min(1, {
+        message: "Health card number is required.",
+    }),
+});
 
-import ChatContainer from "./ChatContainer";
-import FormContainer, { FormSchema } from "./FormContainer";
-
-// API response from ChatGPT analysis
-interface ApiResponse {
-  issue: string;
-  symptoms: string;
-  medication: string;
-  other: string;
-  severity: number;
+interface FormProps {
+    onSubmit: (data: z.infer<typeof FormSchema>) => void;
 }
 
-const FormAndChat = () => {
-  const { toast } = useToast();
-
-  // Setup to grab the user's id from their cookies
-
-  // Setup to store the ChatGPT response
-  const [chatResponse, setChatResponse] = useState<ApiResponse | null>(null);
-
-  // Setup the call to the Convex API to create an appointment in the system
-  const createAppointment = useMutation(
-    api.mutations.appointment.createAppointment
-  );
-
-  const [userId, setUserId] = useState<string | null>(null)
-
-  useEffect(() => {
-    async function fetchUserId() {
-      const response = await fetch("/api/cookieUserId");
-      const data = await response.json();
-      setUserId(data.userId);
-    }
-
-    fetchUserId();
-  }, []);
-
-  // Handle a form being submitted
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // Grab the username and display back in a toast
-    const userName = data.name;
-    toast({
-      title: `Form submitted for ${userName}`,
+const FormContainer = ({ onSubmit }: FormProps) => {
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            name: "",
+            dateOfBirth: "",
+            phoneNumber: "",
+            healthCardNumber: "",
+        },
     });
 
-    console.log("hi");
-
     
-    console.log(userId)
-    // If the API from ChatGPT has a response AND the userId is in the
-    // cookies, pass it to Convex
-    if (chatResponse && userId) {
-      createAppointment({
-        issue: chatResponse.issue,
-        medication: chatResponse.medication,
-        others: "",
-        severity: chatResponse.severity,
-        symptoms: "",
-        userId: userId as Id<"user">,
-      });
-    }
-  }
 
-  return (
-    <main className="flex min-h-screen">
-      <div className="form-container">
-        <FormContainer onSubmit={onSubmit} />
-      </div>
+    return (
+        <div className="form-itself">
+            <div className="form-pre-text">
+                <h1>Fill out this form!</h1>
+                <p>
+                    hi there, please start fill out the form, then chat with our bot, then submit it ✅
+                </p>
+            </div>
 
-      <div className="chat-container">
-        <ChatContainer setChatResponse={setChatResponse} />
-      </div>
-    </main>
-  );
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                    {/* Name Field */}
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="John Doe" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    Please enter your full name.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    {/* Date of Birth Field */}
+                    <FormField
+                        control={form.control}
+                        name="dateOfBirth"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Date of Birth</FormLabel>
+                                <FormControl>
+                                    <Input type="date" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    Please enter your date of birth.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    {/* Phone Number Field */}
+                    <FormField
+                        control={form.control}
+                        name="phoneNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Phone Number</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="(123) 456-7890" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    Please enter your phone number.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    {/* Health Card Number Field */}
+                    <FormField
+                        control={form.control}
+                        name="healthCardNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Health Card Number</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Health Card Number" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    Please enter your health card number.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Submit Button */}
+                    <Button type="submit" >
+                        Submit
+                    </Button>
+                </form>
+            </Form>
+        </div>
+    );
 };
 
-export default FormAndChat;
+export default FormContainer;
