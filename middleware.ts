@@ -1,8 +1,8 @@
-import { NextResponse, type NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
 
-  const currentUser = request.cookies.get("userId")?.value;
+  const currentUser = request.cookies.get("currentUser")?.value;
   const isDoctor = request.cookies.get("isDoctor")?.value;
 
 
@@ -17,11 +17,8 @@ export function middleware(request: NextRequest) {
   if (currentUser && !isDoctor && !request.nextUrl.pathname.startsWith("/patient-dashboard")) {
     return Response.redirect(new URL("/patient-dashboard", request.url));
   }
-
-  return NextResponse.next();
-
 }
 
 export const config = {
-  matcher: ['/home/:path*'],
+  matcher: ["/((?!api|_next/static|_next/image|.\.png$).)"],
 };

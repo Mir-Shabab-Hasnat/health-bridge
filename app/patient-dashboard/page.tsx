@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {Input} from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 
 // Define an interface for the appointment data
 interface Appointment {
@@ -28,7 +28,6 @@ interface Appointment {
     status: string;
     date: string;
 }
-
 
 // Dummy appointment data
 const appointmentData = [
@@ -60,7 +59,7 @@ const columns: ColumnDef<Appointment>[] = [
 const PatientDashboard = () => {
     const router = useRouter();
     const [isUserInfoOpen, setIsUserInfoOpen] = React.useState(false);
-    const [searchQuery] = React.useState(""); // State for the search query
+    const [searchQuery, setSearchQuery] = React.useState(""); // Added to handle search input
 
     // Dummy user details
     const userDetails = {
@@ -68,7 +67,6 @@ const PatientDashboard = () => {
         username: "johndoe",
         email: "john.doe@example.com",
     };
-
 
     // Filter appointment data based on the search query
     const filteredAppointments = appointmentData.filter((appointment) =>
@@ -98,14 +96,14 @@ const PatientDashboard = () => {
                 <h2>Recent Appointments</h2>
                 <div>
                     <div className="search-bar">
-                    {/* Search Bar */}
-                    <Input
-                        placeholder="Filter status..."
-                        value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("status")?.setFilterValue(event.target.value)
-                        }
-                    />
+                        {/* Search Bar */}
+                        <Input
+                            placeholder="Filter issue..."
+                            value={searchQuery}
+                            onChange={(event) =>
+                                setSearchQuery(event.target.value)
+                            }
+                        />
                     </div>
 
                     <div className="table-dashboard">
@@ -124,15 +122,22 @@ const PatientDashboard = () => {
                                 {table.getRowModel().rows.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow key={row.id}>
-                                            {row.getVisibleCells().map((cell) => (
-                                                <TableCell key={cell.id}>
-                                                </TableCell>
-                                            ))}
+                                            {row.getVisibleCells().map(
+                                                (cell) => (
+                                                    <TableCell
+                                                        key={cell.id}
+                                                    >
+                                                    </TableCell>
+                                                )
+                                            )}
                                         </TableRow>
                                     ))
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={3} className="h-24 text-center">
+                                        <TableCell
+                                            colSpan={columns.length}
+                                            className="h-24 text-center"
+                                        >
                                             No results.
                                         </TableCell>
                                     </TableRow>
@@ -142,15 +147,19 @@ const PatientDashboard = () => {
                     </div>
                 </div>
 
-                <Button className="secondary-btn" onClick={handleSubmit}>form and chatbot</Button>
+                <Button className="secondary-btn" onClick={handleSubmit}>
+                    form and chatbot
+                </Button>
             </div>
 
             {/* UserInfo Drawer */}
-            <UserInfo
-                isOpen={isUserInfoOpen}
-                onClose={() => setIsUserInfoOpen(false)}
-                userDetails={userDetails}
-            />
+            {isUserInfoOpen && (
+                <UserInfo
+                    isOpen={isUserInfoOpen}
+                    onClose={() => setIsUserInfoOpen(false)}
+                    userDetails={userDetails}
+                />
+            )}
         </div>
     );
 };

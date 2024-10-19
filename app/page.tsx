@@ -1,6 +1,6 @@
 
 import "./globals.css"
-import LoginPage from "../app/login/page"
+import LoginPage from "./LoginPage"
 
 const Homepage = () => {
   return (

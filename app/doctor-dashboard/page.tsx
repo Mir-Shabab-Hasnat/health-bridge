@@ -10,9 +10,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
+
 
 
 import React from 'react';
@@ -38,6 +40,7 @@ const DoctorDashboard = () => {
         })) : [];
 
     return (
+
         <Table>
             <TableCaption>A list of your recent appointments.</TableCaption>
             <TableHeader>
@@ -68,6 +71,7 @@ const DoctorDashboard = () => {
                 </TableRow>
             </TableFooter>
         </Table>
+
     );
 };
 
