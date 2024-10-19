@@ -160,6 +160,9 @@ body {
 }
 
 .secondary-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
   font-size: 15px;
   margin: 20px 0;
@@ -195,12 +198,80 @@ body {
   flex-direction: column;
 }
 
-/*----- DASHBOARD ------*/
+
 .dashboard {
   font-size: 35px;
   display: flex;
   flex-direction: column;
   padding: 20px;
   color: #fff;
+}
+
+
+.dashboard h2 {
+  font-weight: 500;
+  padding-bottom: 2rem;
+}
+
+
+/*----- TABLE ------*/
+
+.table-dashboard {
+  border-radius: calc(var(--radius) - 2px);
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  max-width: 24rem/* 384px */;
+}
+
+
+/*----- BIG FORM -----*/
+.form-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 40px 0px,
+  rgba(0, 0, 0, 0.08) 1px 0px 0px 0px;
+
+
+}
+
+.chat-container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  background-image: url('/Artboard.png');
+  background-repeat: no-repeat;  /* Prevents duplication */
+  background-size: cover;        /* Adjusts image to cover the entire area */
+  background-position: center;
+}
+
+
+.form-itself {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+}
+
+.form-itself .form-pre-text h1{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 39px;
+  font-weight: 500;
 }
 

@@ -13,21 +13,21 @@ interface ApiResponse {
 }
 
 interface ChatContainerProps {
-    
+
     setChatResponse: (response: ApiResponse) => void
   }
 
 const ChatContainer = ({setChatResponse}: ChatContainerProps) => {
     const [open, setOpen] = useState(false);
     const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null)
-    
+
     if (apiResponse) {
         setChatResponse(apiResponse)
     }
-    
+
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-500 rounded-lg p-4 h-auto">
-            <div className='flex flex-col items-center justify-center w-full max-w-mdd'> {/* Add max width to center and contain the button */}
+        <div className="flex flex-col items-center justify-center rounded-lg p-4 h-auto">
+            <div className='flex flex-col items-center justify-center w-full max-w-mdd '> {/* Add max width to center and contain the button */}
                 <AIChatButton onClick={() => setOpen(!open)} />
                 {open && (
                     <AIChatBox
