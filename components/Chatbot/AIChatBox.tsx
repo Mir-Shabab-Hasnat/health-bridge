@@ -8,10 +8,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
 interface ApiResponse {
-  issue?: string;
-  symptoms?: string;
-  medication?: string;
-  other?: string;
+  issue: string;
+  symptoms: string;
+  medication: string;
+  other: string;
   severity: number;
 }
 
