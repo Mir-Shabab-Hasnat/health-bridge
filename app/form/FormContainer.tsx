@@ -1,11 +1,10 @@
 "use client";
 
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
-import {z} from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -15,8 +14,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-
+import { Input } from "@/components/ui/input";
 
 // Update the schema to include new fields
 export const FormSchema = z.object({
@@ -32,16 +30,13 @@ export const FormSchema = z.object({
     healthCardNumber: z.string().min(1, {
         message: "Health card number is required.",
     }),
-
 });
 
 interface FormProps {
     onSubmit: (data: z.infer<typeof FormSchema>) => void;
 }
 
-const FormContainer = ({onSubmit}: FormProps) => {
-
-
+const FormContainer = ({ onSubmit }: FormProps) => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -49,16 +44,18 @@ const FormContainer = ({onSubmit}: FormProps) => {
             dateOfBirth: "",
             phoneNumber: "",
             healthCardNumber: "",
-
         },
     });
 
+    const aiChatDone = false; // Set to true when AI chat is done
 
     return (
         <div className="form-itself">
             <div className="form-pre-text">
                 <h1>Fill out this form!</h1>
-                <p>by filling out this form you will help our doctors save time to look at your history</p>
+                <p>
+                    hi there, please start fill out the form, then chat with our bot, then submit it ✅
+                </p>
             </div>
 
             <Form {...form}>
@@ -67,7 +64,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                     <FormField
                         control={form.control}
                         name="name"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
@@ -76,7 +73,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                                 <FormDescription>
                                     Please enter your full name.
                                 </FormDescription>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -84,7 +81,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                     <FormField
                         control={form.control}
                         name="dateOfBirth"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Date of Birth</FormLabel>
                                 <FormControl>
@@ -93,7 +90,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                                 <FormDescription>
                                     Please enter your date of birth.
                                 </FormDescription>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -101,7 +98,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                     <FormField
                         control={form.control}
                         name="phoneNumber"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Phone Number</FormLabel>
                                 <FormControl>
@@ -110,7 +107,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                                 <FormDescription>
                                     Please enter your phone number.
                                 </FormDescription>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -118,7 +115,7 @@ const FormContainer = ({onSubmit}: FormProps) => {
                     <FormField
                         control={form.control}
                         name="healthCardNumber"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Health Card Number</FormLabel>
                                 <FormControl>
@@ -127,13 +124,15 @@ const FormContainer = ({onSubmit}: FormProps) => {
                                 <FormDescription>
                                     Please enter your health card number.
                                 </FormDescription>
-                                <FormMessage/>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
 
-
-                    <Button type="submit">Submit</Button>
+                    {/* Submit Button */}
+                    {/*<Button type="submit" disabled={!aiChatDone}>*/}
+                    {/*    Submit*/}
+                    {/*</Button>*/}
                 </form>
             </Form>
         </div>
@@ -141,4 +140,3 @@ const FormContainer = ({onSubmit}: FormProps) => {
 };
 
 export default FormContainer;
-

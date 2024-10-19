@@ -37,7 +37,7 @@ const ChatContainer = ({setChatResponse}: ChatContainerProps) => {
                 )}
             </div>
             {apiResponse && (
-                <div className="bg-gray-900 p-3 rounded-md mt-4">
+                <div className="summary-ai">
                     <h3 className="text-lg font-semibold mb-2">Summary of Conversation:</h3>
                     <div className="mb-2">
                         <strong>Issue:</strong> {apiResponse.issue || "N/A"}
