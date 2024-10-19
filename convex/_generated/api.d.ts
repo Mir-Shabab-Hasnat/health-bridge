@@ -17,7 +17,7 @@ import type {
 } from "convex/server";
 import type * as mutations_triageIngestion from "../mutations/triageIngestion.js";
 import type * as mutations_userAuthentication from "../mutations/userAuthentication.js";
-import type * as queries_appointmentViewing from "../queries/appointmentViewing.js";
+import type * as queries_appointmentFetching from "../queries/appointmentFetching.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -30,7 +30,7 @@ import type * as queries_appointmentViewing from "../queries/appointmentViewing.
 declare const fullApi: ApiFromModules<{
   "mutations/triageIngestion": typeof mutations_triageIngestion;
   "mutations/userAuthentication": typeof mutations_userAuthentication;
-  "queries/appointmentViewing": typeof queries_appointmentViewing;
+  "queries/appointmentFetching": typeof queries_appointmentFetching;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
