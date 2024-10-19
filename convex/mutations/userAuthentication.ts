@@ -44,14 +44,14 @@ export const registerUser = mutation({
     const salt = genSaltSync(10);
     const hash = hashSync(args.password, salt);
 
-    // TODO remove this disable line when we implement handling the userId
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const userId = await ctx.db.insert("user", {
       hash: hash,
       isDoctor: false,
       username: args.username,
     });
 
-    return true;
+    // TODO: stamp cookie
+
+    return typeof userId !== "undefined";
   },
 });
