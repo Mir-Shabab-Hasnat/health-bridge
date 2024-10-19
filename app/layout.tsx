@@ -3,7 +3,7 @@ import './globals.css';
 
 import { Inter } from 'next/font/google';
 
-import { ConvexClientProvider } from './convexClientProvider';
+import { ConvexClientProvider } from './ConvexClientProvider';
 
 const inter = Inter({ subsets: ["latin"] });
 
