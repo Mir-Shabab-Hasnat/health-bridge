@@ -1,24 +1,43 @@
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
+// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
+  // Determine web path
+  const host = request.headers.get("host");
 
-  const currentUser = request.cookies.get("currentUser")?.value;
-  const isDoctor = request.cookies.get("isDoctor")?.value;
-
-
-  if (!currentUser && !request.nextUrl.pathname.startsWith("/home")) {
-    return Response.redirect(new URL("/home", request.url));
+  if (request.cookies.get("userId") && request.nextUrl.pathname === "/") {
+    if (request.cookies.get("isDoctor")?.value == "true") {
+      return NextResponse.redirect(`http://${host}/doctor-dashboard`);
+    } else {
+      return NextResponse.rewrite(`http://${host}/patient-dashboard`);
+    }
   }
 
-  if (currentUser && isDoctor && !request.nextUrl.pathname.startsWith("/doctor-dashboard")) {
-    return Response.redirect(new URL("/doctor-dashboard", request.url));
+  if (request.cookies.get("isDoctor")?.value === "true") {
+    // Move them off patient pages and keep them logged in
+    if (
+      request.nextUrl.pathname === "/patient-dashboard" ||
+      request.nextUrl.pathname === "/"
+    ) {
+      return NextResponse.redirect(`http://${host}/doctor-dashboard`);
+    } else if (request.nextUrl.pathname === "/form") {
+      return NextResponse.redirect(`http://${host}/doctor-form`);
+    }
+  } else {
+    if (
+      request.nextUrl.pathname === "/doctor-dashboard" ||
+      request.nextUrl.pathname === "/"
+    ) {
+      return NextResponse.redirect(`http://${host}/patient-dashboard`);
+    } else if (request.nextUrl.pathname === "/doctor-form") {
+      return NextResponse.redirect(`http://${host}/form`);
+    }
   }
 
-  if (currentUser && !isDoctor && !request.nextUrl.pathname.startsWith("/patient-dashboard")) {
-    return Response.redirect(new URL("/patient-dashboard", request.url));
-  }
+  return NextResponse.next();
 }
 
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.\.png$).)"],
+  matcher: "/:path*",
 };
