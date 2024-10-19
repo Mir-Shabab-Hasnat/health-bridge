@@ -17,6 +17,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import {Input} from "@/components/ui/input"
+import Nav from "./Nav";
+
 
 // Define an interface for the appointment data
 interface Appointment {
@@ -26,7 +28,7 @@ interface Appointment {
     issue: string;
     status: string;
     date: string;
-    
+
 }
 
 
@@ -101,6 +103,7 @@ const DoctorDashboard = () => {
 
     return (
         <div className="page-container">
+            <Nav />
             <div className="dashboard">
                 <h2>Recent Appointments</h2>
                 <div>

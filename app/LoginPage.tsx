@@ -1,6 +1,5 @@
 "use client";
 
-import "../globals.css";
 import * as z from "zod";
 import {Button} from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,33 +29,33 @@ const LoginPage = () => {
     const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
 
     const handleSubmit = async (data : z.infer<typeof formSchema>) => {
-      try {
-        console.log("Form Data: ", data);
-        console.log(data)
-        const result: boolean | (string | boolean)[] = await authenticate({ username: data.username, password: data.password });
+        try {
+            console.log("Form Data: ", data);
+            console.log(data)
+            const result: boolean | (string | boolean)[] = await authenticate({ username: data.username, password: data.password });
 
 
-        if (Array.isArray(result)) {
-            console.log("result", result)
-          const [userId, isDoctor] = result;
+            if (Array.isArray(result)) {
+                console.log("result", result)
+                const [userId, isDoctor] = result;
 
-          if (typeof userId === 'string') {
-            document.cookie = `userId=${userId}; path=/`;
-          }
+                if (typeof userId === 'string') {
+                    document.cookie = `userId=${userId}; path=/`;
+                }
 
-          if (typeof isDoctor === 'boolean') {
-            document.cookie = `isDoctor=${isDoctor}; path=/`;
-          }
+                if (typeof isDoctor === 'boolean') {
+                    document.cookie = `isDoctor=${isDoctor}; path=/`;
+                }
 
-        } else if (typeof result === 'boolean') {
-          document.cookie = `loginSuccess=${result}; path=/`;
+            } else if (typeof result === 'boolean') {
+                document.cookie = `loginSuccess=${result}; path=/`;
+            }
+
+            alert('User registered successfully!');
+        } catch (error) {
+            console.error(error);
+            alert('Error registering user: ' + error)
         }
-
-        alert('User registered successfully!');
-      } catch (error) {
-        console.error(error);
-        alert('Error registering user: ' + error)
-      }
     };
 
     return (
