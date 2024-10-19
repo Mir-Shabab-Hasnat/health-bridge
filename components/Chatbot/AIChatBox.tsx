@@ -13,10 +13,12 @@ import { Button } from "../ui/button";
 interface AIChatBoxProps {
   open: boolean;
   onClose: () => void;
+  setApiResponse: (response: any) => void
 }
 
-const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
+const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
   const {
+    
     messages,
     input,
     handleInputChange,
@@ -29,8 +31,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  //const [submittedMessages, setSubmittedMessages] = useState<string>();
-  const [apiResponse, setApiResponse] = useState(null)
+  
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -56,6 +57,8 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
 
     // Outputting the result to the console (you can change this as needed)
     console.log(formattedMessages);
+
+    onClose()
     
     // setSubmittedMessages(formattedMessages);
     
@@ -90,14 +93,14 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
   return (
     <div
       className={cn(
-        "flex transition-all duration-300 ease-in-out mb-5", // Smoothly transition when opening
+        "flex flex-col items-center w-full h-auto p-2 transition-all duration-300 ease-in-out mb-5", // Smoothly transition when opening
         open ? "block" : "hidden"
       )}
     >
       <button onClick={onClose} className="mb-1 ms-auto block">
         <XCircle size={30} />
       </button>
-      <div className="flex h-[600px] w-auto sm:w-[500px] flex-col rounded bg-background border shadow-xl p-3">
+      <div className="flex h-[600px] w-auto  flex-col rounded bg-background border shadow-xl p-3">
         <div className="h-full mt-3 px-3 overflow-y-auto" ref={scrollRef}>
           {messages.map((message) => (
             <ChatMessage message={message} key={message.id} />
@@ -163,15 +166,8 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
           </Button>
         </form>
 
-        <div className="flex flex-col mt-3">
-        {apiResponse && (
-          <div className="bg-gray-100 p-3 rounded-md">
-            <h3 className="text-lg font-semibold mb-2">API Response:</h3>
-            <pre className="whitespace-pre-wrap break-words overflow-auto">
-              {JSON.stringify(apiResponse, null, 2)}
-            </pre>
-          </div>
-        )}
+        <div className="flex flex-col mt-3 h-auto">
+        
       </div>
       </div>
       
