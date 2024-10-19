@@ -8,7 +8,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/hooks/use-toast";
 
-import { getUserId } from "../api/cookieUserId/getUserId";
+
 import ChatContainer from "./ChatContainer";
 import FormContainer, { FormSchema } from "./FormContainer";
 
