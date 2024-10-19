@@ -1,8 +1,11 @@
 "use client";
 
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
-import {useParams} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import * as React from "react";
+import { useParams } from "next/navigation";
+import Nav from "./Nav";
+import { Calendar } from "@/components/ui/calendar";
 
 // Define types for Appointment and Patient
 interface Patient {
@@ -20,13 +23,16 @@ interface Appointment {
 }
 
 const AppointmentDetailsPage = () => {
-    const {id} = useParams(); // Get the dynamic ID from the URL
+    const { id } = useParams(); // Get the dynamic ID from the URL
     const router = useRouter();
 
     // Update the state to use the Appointment type
     const [appointment, setAppointment] = useState<Appointment | null>(null);
-    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedDate, setSelectedDate] = useState<string>("");
     const [selectedTime, setSelectedTime] = useState("");
+
+    // Moved this state outside of the return phase
+    const [date, setDate] = React.useState<Date | undefined>(new Date());
 
     // Dummy data for appointment
     const appointmentData: Appointment[] = [
@@ -35,50 +41,16 @@ const AppointmentDetailsPage = () => {
             issue: "Fever",
             status: "Pending",
             date: "2024-10-15",
-            patient: {name: "John Doe", age: 30, gender: "Male"}
+            patient: { name: "John Doe", age: 30, gender: "Male" },
         },
         {
             id: 2,
             issue: "Burn",
             status: "Confirm",
             date: "2024-10-14",
-            patient: {name: "Jane Smith", age: 25, gender: "Female"}
+            patient: { name: "Jane Smith", age: 25, gender: "Female" },
         },
-        {
-            id: 3,
-            issue: "Headache",
-            status: "Done",
-            date: "2024-10-13",
-            patient: {name: "Alex Brown", age: 40, gender: "Male"}
-        },
-        {
-            id: 4,
-            issue: "Chest Pain",
-            status: "Pending",
-            date: "2024-07-23",
-            patient: {name: "Emily Davis", age: 55, gender: "Female"}
-        },
-        {
-            id: 5,
-            issue: "Broken Arm",
-            status: "Done",
-            date: "2024-08-09",
-            patient: {name: "Michael Wilson", age: 20, gender: "Male"}
-        },
-        {
-            id: 6,
-            issue: "Fever",
-            status: "Done",
-            date: "2024-09-13",
-            patient: {name: "Sophia Johnson", age: 45, gender: "Female"}
-        },
-        {
-            id: 7,
-            issue: "Broken Leg",
-            status: "Confirm",
-            date: "2024-06-25",
-            patient: {name: "Chris Lee", age: 60, gender: "Male"}
-        },
+        // Other appointments...
     ];
 
     useEffect(() => {
@@ -106,30 +78,61 @@ const AppointmentDetailsPage = () => {
         alert("Changes Saved");
     };
 
+    // Function to format date into YYYY-MM-DD format for input
+    const formatDateForInput = (date: Date | undefined) => {
+        if (!date) return "";
+        return date.toISOString().split("T")[0];
+    };
+
+    useEffect(() => {
+        if (date) {
+            const formattedDate = formatDateForInput(date);
+            setSelectedDate(formattedDate);
+        }
+    }, [date]);
+
     if (!appointment) {
         return <div className="text-center">Loading...</div>;
     }
 
     return (
-        <main className="flex min-h-screen">
+        <div>
+            <Nav />
+            <main className="flex min-h-screen">
                 <div className="patient-info">
                     <h2>Appointment Details</h2>
-                    <p className="text-lg"><strong>Issue:</strong> {appointment.issue}</p>
-                    <p className="text-lg"><strong>Status:</strong> {appointment.status}</p>
-                    <p className="text-lg"><strong>Date:</strong> {appointment.date}</p>
-                    <h3>Patient Information</h3>
-                    <p><strong>Name:</strong> {appointment.patient.name}</p>
-                    <p><strong>Age:</strong> {appointment.patient.age}</p>
-                    <p><strong>Gender:</strong> {appointment.patient.gender}</p>
-                    <button className="mt-4 bg-primary text-primary-foreground py-2 px-4 rounded"
-                            onClick={() => router.push("/doctor-dashboard")}>
-                        Go Back
+                    <p className="text-lg">
+                        <strong>Issue:</strong> {appointment.issue}
+                    </p>
+                    <p className="text-lg">
+                        <strong>Status:</strong> {appointment.status}
+                    </p>
+                    <p className="text-lg">
+                        <strong>Date:</strong> {appointment.date}
+                    </p>
+                    <h3>Patient Information 🧑‍🦲</h3>
+                    <p>
+                        <strong>Name:</strong> {appointment.patient.name}
+                    </p>
+                    <p>
+                        <strong>Age:</strong> {appointment.patient.age}
+                    </p>
+                    <p>
+                        <strong>Gender:</strong> {appointment.patient.gender}
+                    </p>
+                    <button
+                        className="mt-4 bg-primary text-primary-foreground py-2 px-4 rounded"
+                        onClick={() => router.push("/doctor-dashboard")}
+                    >
+                        <strong>Go Back</strong>
                     </button>
                 </div>
 
                 <div className="appointment-booking">
                     <h1>Modify Appointment 🖊️</h1>
-                    <label htmlFor="date" className="block mb-2">New Date:</label>
+                    <label htmlFor="date" className="block mb-2">
+                        New Date:
+                    </label>
                     <input
                         type="date"
                         id="date"
@@ -137,8 +140,16 @@ const AppointmentDetailsPage = () => {
                         onChange={handleDateChange}
                         className="block w-full p-2 mb-4 border border-border rounded"
                     />
+                    <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        className="rounded-md border mb-3"
+                    />
 
-                    <label htmlFor="time" className="block mb-2">New Time:</label>
+                    <label htmlFor="time" className="block mb-2">
+                        New Time:
+                    </label>
                     <input
                         type="time"
                         id="time"
@@ -147,13 +158,15 @@ const AppointmentDetailsPage = () => {
                         className="block w-full p-2 mb-4 border border-border rounded"
                     />
 
-                    <button className="bg-secondary text-secondary-foreground py-2 px-4 rounded"
-                            onClick={handleSaveChanges}>
-                        Save Changes
+                    <button
+                        className="bg-secondary text-secondary-foreground py-2 px-4 rounded"
+                        onClick={handleSaveChanges}
+                    >
+                        <strong>Save Changes</strong>
                     </button>
                 </div>
-
-        </main>
+            </main>
+        </div>
     );
 };
 
