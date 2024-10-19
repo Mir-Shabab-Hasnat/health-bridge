@@ -33,7 +33,7 @@ const LoginPage = () => {
     const handleSubmit = (data: z.infer<typeof formSchema>) => {
         console.log("Form Data: ", data);
 
-        router.push("/dashboard")
+        router.push("/patient-dashboard")
     }
 
     return (
@@ -83,8 +83,6 @@ const LoginPage = () => {
 
             </Form>
 
-
-            
         </div>
     )
 }

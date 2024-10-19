@@ -34,7 +34,7 @@ export const insertAppointment = mutation({
     }
 
     const appointmentId = await ctx.db.insert("appointment", {
-      doctor: "" as Id<"user">,
+      doctor: userId,
       end: "",
       issue: args.issue,
       medication: args.medication,

@@ -5,7 +5,7 @@ import { ConvexError, v } from 'convex/values';
 
 import { mutation } from '../_generated/server';
 
-export const registerUser = mutation({
+export const authenticate = mutation({
   args: {
     username: v.string(),
     password: v.string(),
@@ -34,11 +34,7 @@ export const registerUser = mutation({
       .first();
 
     if (existingUser) {
-      throw new ConvexError({
-        message: "Username already in use. Please choose another one.",
-        serverUsernameError: true,
-        serverPasswordError: false,
-      });
+      return existingUser._id, existingUser.isDoctor;
     }
 
     const salt = genSaltSync(10);
@@ -50,8 +46,14 @@ export const registerUser = mutation({
       username: args.username,
     });
 
-    // TODO: stamp cookie
+    if (!userId) {
+      throw new ConvexError({
+        message: "Server side error creating user account.",
+        serverUsernameError: false,
+        serverPasswordError: false,
+      });
+    }
 
-    return typeof userId !== "undefined";
+    return [userId as string, false];
   },
 });

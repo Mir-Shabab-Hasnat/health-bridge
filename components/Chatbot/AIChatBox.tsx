@@ -67,7 +67,7 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
     // sending request to analysis api to get analysis
     try {
         const response = await fetch("/api/analysis", {
-            method: "POST", 
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
@@ -87,7 +87,7 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
     } catch (error) {
         console.log(error)
     }
-    
+
   };
 
   return (
@@ -127,6 +127,7 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
           {!error && messages.length === 0 && (
             <div className="flex h-full items-center justify-center gap-3">
               <Bot />
+              Send a &quot;Hi&quot; to the chatbot to get started
               Send a &quot;Hi&quot; to the chatbot to get started
             </div>
           )}
@@ -170,7 +171,7 @@ const AIChatBox = ({ open, onClose, setApiResponse }: AIChatBoxProps) => {
         
       </div>
       </div>
-      
+
     </div>
   );
 };
