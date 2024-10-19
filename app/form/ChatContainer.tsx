@@ -5,10 +5,10 @@ import AIChatButton from "@/components/Chatbot/AIChatButton";
 import { useState } from "react";
 
 interface ApiResponse {
-    issue?: string;
-    symptoms?: string;
-    medication?: string;
-    other?: string;
+    issue: string;
+    symptoms: string;
+    medication: string;
+    other: string;
     severity: number;
 }
 
