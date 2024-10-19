@@ -21,11 +21,6 @@ const formSchema = z.object({
 
 
 const LoginPage = () => {
-
-    //const router = useRouter()
-
-    console.log("LoginPage@!!@!!@E#@!");
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -34,15 +29,7 @@ const LoginPage = () => {
         },
     });
 
-
-    // const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    //     console.log("Form Data: ", data);
-
-    // }
-    // const [username, setUsername] = useState('');
-    // const [password, setPassword] = useState('');
     const authenticate = useMutation(api.mutations.userAuthentication.authenticate);
-    console.log("authenticateewfdwedfcws");
   
     const handleSubmit = async (data : z.infer<typeof formSchema>) => {
       try {
@@ -51,10 +38,6 @@ const LoginPage = () => {
         const result: boolean | (string | boolean)[] = await authenticate({ username: data.email, password: data.password });
 
 
-        console.log("resultttt", result)
-        console.log("resultttt", result.valueOf())
-
-        // check if it has an array of [userId, isDoctor] HASSS
         if (Array.isArray(result)) {
             console.log("result", result)
           const [userId, isDoctor] = result;
