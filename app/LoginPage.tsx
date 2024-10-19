@@ -73,7 +73,7 @@ const LoginPage = () => {
                         name="username"
                         render={({field}) => (
                             <FormItem>
-                                <FormLabel>Email Address</FormLabel>
+                                <FormLabel>Username</FormLabel>
                                 <FormControl>
                                     <Input placeholder="your username" type="username" {...field} />
                                 </FormControl>

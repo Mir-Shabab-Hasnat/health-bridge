@@ -16,27 +16,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-// Update the schema to include new fields
+// Form validation schema
 export const FormSchema = z.object({
-    name: z.string().min(1, {
-        message: "Name is required.",
-    }),
-    dateOfBirth: z.string().min(1, {
-        message: "Date of birth is required.",
-    }),
-    phoneNumber: z.string().min(1, {
-        message: "Phone number is required.",
-    }),
-    healthCardNumber: z.string().min(1, {
-        message: "Health card number is required.",
-    }),
+    name: z.string().min(1, ),
+    dateOfBirth: z.string().min(1, ),
+    phoneNumber: z.string().min(1, ),
+    healthCardNumber: z.string().min(1, ),
 });
 
-interface FormProps {
-    onSubmit: (data: z.infer<typeof FormSchema>) => void
-}
+// interface FormProps {
+//     onSubmit: (data: z.infer<typeof FormSchema>) => z.infer<typeof FormSchema>;
+// }
 
-const FormContainer = ({ onSubmit }: FormProps) => {
+const FormContainer = () => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -49,6 +41,11 @@ const FormContainer = ({ onSubmit }: FormProps) => {
 
     const aiChatDone = false; // Set to true when AI chat is done
 
+    const handleFormSubmit = (data: z.infer<typeof FormSchema>) => {
+        console.log("Form submitted:", data);
+        return data;
+    };
+
     return (
         <div className="form-itself">
             <div className="form-pre-text">
@@ -59,7 +56,7 @@ const FormContainer = ({ onSubmit }: FormProps) => {
             </div>
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                <form onSubmit={form.handleSubmit(handleFormSubmit)} className="w-2/3 space-y-6">
                     {/* Name Field */}
                     <FormField
                         control={form.control}
@@ -70,9 +67,6 @@ const FormContainer = ({ onSubmit }: FormProps) => {
                                 <FormControl>
                                     <Input placeholder="John Doe" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Please enter your full name.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -87,9 +81,6 @@ const FormContainer = ({ onSubmit }: FormProps) => {
                                 <FormControl>
                                     <Input type="date" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Please enter your date of birth.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -104,9 +95,6 @@ const FormContainer = ({ onSubmit }: FormProps) => {
                                 <FormControl>
                                     <Input placeholder="(123) 456-7890" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Please enter your phone number.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -121,16 +109,13 @@ const FormContainer = ({ onSubmit }: FormProps) => {
                                 <FormControl>
                                     <Input placeholder="Health Card Number" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Please enter your health card number.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
 
                     {/* Submit Button */}
-                    <Button type="submit" disabled={!aiChatDone}>
+                    <Button type="submit" disabled={aiChatDone}>
                         Submit
                     </Button>
                 </form>
