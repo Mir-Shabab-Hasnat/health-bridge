@@ -118,7 +118,7 @@ const AIChatBox = ({ open, onClose }: AIChatBoxProps) => {
   return (
     <div
       className={cn(
-        "transition-all duration-300 ease-in-out mb-5", // Smoothly transition when opening
+        "flex transition-all duration-300 ease-in-out mb-5", // Smoothly transition when opening
         open ? "block" : "hidden"
       )}
     >
