@@ -49,7 +49,12 @@ const LoginPage = () => {
         console.log("Form Data: ", data);
         console.log(data)
         const result: boolean | (string | boolean)[] = await authenticate({ username: data.email, password: data.password });
-  
+
+
+        console.log("resultttt", result)
+        console.log("resultttt", result.valueOf())
+
+        // check if it has an array of [userId, isDoctor] HASSS
         if (Array.isArray(result)) {
             console.log("result", result)
           const [userId, isDoctor] = result;

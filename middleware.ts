@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
 
   console.log("middlewareeeeee");
-  const currentUser = request.cookies.get("currentUser")?.value;
+  const currentUser = request.cookies.get("userId")?.value;
   const isDoctor = request.cookies.get("isDoctor")?.value;
 
 
